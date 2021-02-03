@@ -18,9 +18,9 @@ writing code which can be incorporated into Archivematica itself.
 **Table of Contents**
 
 - [Submitting bugs]
-- [Submitting enhancement ideas](#submitting-enhancements)
-- [Submitting code changes](#submitting-code-changes)
-  - [Getting started](#getting-started)
+- [Submitting enhancement ideas]
+- [Submitting code changes]
+  - [Getting started]
   - [When to submit code for review?](#when-to-submit-code-for-review)
   - [Opening the pull request](#opening-the-pull-request)
   - [Discussion](#discussion)
@@ -414,3 +414,6 @@ Further content comes after a blank line.
 [documentation]: https://github.com/artefactual/archivematica-docs/
 [mailing list]: https://groups.google.com/forum/#!forum/archivematica
 [Submitting bugs]: #submitting-bugs
+[Submitting enhancement ideas]: #submitting-enhancements
+[Submitting code changes]: #submitting-code-changes
+[Getting started]: #getting-started
