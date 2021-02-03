@@ -17,7 +17,7 @@ writing code which can be incorporated into Archivematica itself.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
-- [Submitting bugs](#submitting-bugs)
+- [Submitting bugs]
 - [Submitting enhancement ideas](#submitting-enhancements)
 - [Submitting code changes](#submitting-code-changes)
   - [Getting started](#getting-started)
