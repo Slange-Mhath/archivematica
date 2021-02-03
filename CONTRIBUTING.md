@@ -17,10 +17,10 @@ writing code which can be incorporated into Archivematica itself.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
-- [Submitting bugs]
-- [Submitting enhancement ideas]
-- [Submitting code changes]
-  - [Getting started]
+- [Submitting bugs](#submitting-bugs)
+- [Submitting enhancement ideas](#submitting-enhancements)
+- [Submitting code changes](#submitting-code-changes)
+  - [Getting started](#getting-started)
   - [When to submit code for review?](#when-to-submit-code-for-review)
   - [Opening the pull request](#opening-the-pull-request)
   - [Discussion](#discussion)
@@ -49,13 +49,13 @@ If you find a security vulnerability, do NOT open an issue. Email
 info@artefactual.com instead.
 
 Issues can be filed using GitHub Issues in the
-[Archivematica Issues repo](https://github.com/archivematica/Issues). It is
+[Archivematica Issues repo]. It is
 recommended to file issues there rather than in any of the Archivematica-related
 code repositories. Artefactual staff also use GitHub issues for any work they do
 on the Archivematica project.
 
 You can also post in our
-[user](https://groups.google.com/forum/#!forum/archivematica) mailing list.
+[user] mailing list.
 A post to the mailing list is always welcome, especially if you're unsure if
 it's a bug or a local problem!
 
@@ -75,12 +75,12 @@ Useful questions to answer if you're having problems include:
 
 Similar to submitting bugs, you are welcome to submit ideas for enhancements or
 new features in the
-[Archivematica Issues repo](https://github.com/archivematica/Issues). This is
+[Archivematica Issues repo]. This is
 also where Artefactual staff record upcoming enhancements when they have been
 sponsored for inclusion either by Artefactual Systems or by a client.
 
 Please feel free also to use the
-[Issues repo wiki](https://github.com/archivematica/Issues/wiki) as a space for
+[Issues repo wiki] as a space for
 gathering and collaborating on ideas. If you are not already a member of the
 Archivematica repo (required for editing the wiki), file an issue there with
 the title "Request membership."
@@ -94,7 +94,7 @@ outside contributors.
 Here's an outline of the contribution process:
 
 1. File an issue in the
-   [Archivematica Issues repo](https://github.com/archivematica/Issues).
+   [Archivematica Issues repo].
 2. Fork the Artefactual project on GitHub, and commit your changes to a branch
    in your fork.
 3. Open a pull request.
@@ -108,8 +108,8 @@ Here's an outline of the contribution process:
 ### Permalinks
 
 Issues can be enhanced by using GitHub's permalink features for
-[files](https://help.github.com/articles/getting-permanent-links-to-files/) and
-[code snippets](https://help.github.com/articles/creating-a-permanent-link-to-a-code-snippet/).
+[files] and
+[code snippets].
 Permalinks allow users to look back over old issues and pull requests and see
 what the code looked like at a certain point in time. This can be useful where
 lines may now have been added or removed but the topic of the conversation may
@@ -120,10 +120,10 @@ still be relevant or of interest to the reader.
 So you have something to contribute to an Artefactual project. Great!
 
 To install Archivematica, see our
-[development installation](https://wiki.archivematica.org/Getting_started#Installation)
+[development installation]
 instructions.
 
-Artefactual uses [GitHub](https://github.com/)'s pull request feature for code
+Artefactual uses [GitHub]'s pull request feature for code
 review. Every change being submitted to an Artefactual project should be
 submitted as a pull request to the appropriate repository. A branch being
 submitted for code review should contain commits covering a related section of
@@ -131,7 +131,7 @@ code. Try not to bundle unrelated changes together in one branch; it makes
 review harder.
 
 If you're not familiar with forking repositories and creating branches in
-GitHub, consult their [guide](https://help.github.com/articles/fork-a-repo).
+GitHub, consult their [guide].
 
 ### When to submit code for review?
 
@@ -143,7 +143,7 @@ shy about submitting early.
 
 ### Opening the pull request
 
-GitHub has an [excellent](https://help.github.com/articles/using-pull-requests)
+GitHub has an [excellent]
 guide on using the pull request feature.
 
 ### Discussion
@@ -154,7 +154,7 @@ a great place to have in-depth conversation on the issue.
 
 Do make use of GitHub's line comment feature!
 
-![Line comment](http://i.imgur.com/FsWppGN.png)
+![Line comment]
 
 By viewing the "Files changed", you can leave a comment on any line of the
 diff. This is a great way to scope discussion to a particular part of a diff.
@@ -167,7 +167,7 @@ have something to contribute on another pull request, even if you're not the
 one who opened it.
 
 For more details about code review in particular, look at our
-[code review guidelines](code_review.md).
+[code review guidelines].
 
 ### Cleaning up the commit history
 
@@ -413,7 +413,15 @@ Further content comes after a blank line.
 ```
 [documentation]: https://github.com/artefactual/archivematica-docs/
 [mailing list]: https://groups.google.com/forum/#!forum/archivematica
-[Submitting bugs]: #submitting-bugs
-[Submitting enhancement ideas]: #submitting-enhancements
-[Submitting code changes]: #submitting-code-changes
-[Getting started]: #getting-started
+[Archivematica Issues repo]: https://github.com/archivematica/Issues
+[user]: https://groups.google.com/forum/#!forum/archivematica
+[Archivematica Issues repo]: https://github.com/archivematica/Issues
+[Issues repo wiki]: https://github.com/archivematica/Issues/wiki 
+[files]: https://help.github.com/articles/getting-permanent-links-to-files/
+[code snippets]: https://help.github.com/articles/creating-a-permanent-link-to-a-code-snippet/
+[development installation]: https://wiki.archivematica.org/Getting_started#Installation
+[GitHub]: https://github.com/
+[guide]: https://help.github.com/articles/fork-a-repo
+[excellent]: https://help.github.com/articles/using-pull-requests
+[Line comment]: http://i.imgur.com/FsWppGN.png
+[code review guidelines]: code_review.md
