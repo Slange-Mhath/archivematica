@@ -8,9 +8,9 @@ submission!
 
 There are many ways to contribute: writing tutorials or blog posts about your
 experience, improving the
-[documentation](https://github.com/artefactual/archivematica-docs/), submitting
+[documentation], submitting
 bug reports, answering questions on the
-[mailing list](https://groups.google.com/forum/#!forum/archivematica), or
+[mailing list], or
 writing code which can be incorporated into Archivematica itself.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -411,3 +411,6 @@ two together.
 
 Further content comes after a blank line.
 ```
+[documentation]: https://github.com/artefactual/archivematica-docs/
+[mailing list]: https://groups.google.com/forum/#!forum/archivematica
+[Submitting bugs]: #submitting-bugs
