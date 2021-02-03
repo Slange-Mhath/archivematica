@@ -174,16 +174,16 @@ For more details about code review in particular, look at our
 Once code review is finished or nearly finished, and no further development is
 planned on the branch, the branch's commit history should be cleaned up.
 You can alter the commit history of a branch using git's powerful
-[interactive rebase feature](http://www.git-scm.com/book/en/Git-Tools-Rewriting-History).
+[interactive rebase feature].
 
 ## Contributor's Agreement
 
 In order for the Archivematica development team to accept any patches or code
 commits, contributors must first sign this
-[Contributor's Agreement](https://wiki.archivematica.org/images/e/e6/Archivematica-CLA-firstname-lastname-YYYY.pdf).
+[Contributor's Agreement].
 The Archivematica contributor's agreement is based almost verbatim on the
-[Apache Foundation](http://apache.org )'s individual
-[contributor license](http://www.apache.org/licenses/icla.txt).
+[Apache Foundation]'s individual
+[contributor license].
 
 If you have any questions or concerns about the Contributor's Agreement,
 please email us at agreement@artefactual.com to discuss them.
@@ -194,14 +194,14 @@ One of the key challenges for open source software is to support a collaborative
 Unifying Archivematica copyrights through contributor agreements is the best way to protect the availability and sustainability of Archivematica over the long-term as free and open-source software.
 In all cases, contributors who sign the Contributor's Agreement retain full rights to use their original contributions for any other purpose outside of Archivematica, while enabling Artefactual Systems, any successor organization which may eventually take over responsibility for Archivematica, and the wider Archivematica community to benefit from their collaboration and contributions in this open source project.
 
-[Artefactual Systems](http://artefactual.com) has made the decision and has a proven track record of making our intellectual property available to the community at large.
+[Artefactual Systems] has made the decision and has a proven track record of making our intellectual property available to the community at large.
 By standardizing contributions on these agreements the Archivematica intellectual property position does not become too complicated.
 This ensures our resources are devoted to making our project the best they can be, rather than fighting legal battles over contributions.
 
 ### How do I send in an agreement?
 
 Please read and sign the
-[contributor agreement](https://wiki.archivematica.org/images/e/e6/Archivematica-CLA-firstname-lastname-YYYY.pdf)
+[Contributor's Agreement]
 and email it to agreement@artefactual.com.
 
 Alternatively, you may send a printed, signed agreement to:
@@ -215,25 +215,25 @@ Alternatively, you may send a printed, signed agreement to:
 
 ### Style
 
-Archivematica uses the Python [PEP8](https://www.python.org/dev/peps/pep-0008/)
+Archivematica uses the Python [PEP8]
 community style guidelines. Newly-written code should conform to PEP-8 style.
 PEP8 is a daunting document, but there are very good linters available that you
 can run to check style in your code.
 
-* The [Black](https://github.com/ambv/black) tool formats the code
+* The [Black] tool formats the code
   automatically. The output is deterministic for any given input. Editor
   integration is possible.
 
-* The [flake8](https://pypi.python.org/pypi/flake8) tool checks for style
+* The [flake8] tool checks for style
   problems as well as errors and complexity. It can be used at the command line
   or as a plugin in your preferred text editor/IDE. The Archivematica
-  [continuous integration system](https://travis-ci.org/artefactual/archivematica)
+  [continuous integration system]
   will currently check code for compliance against flake8.
 
 We have integrated these tools with our CI, i.e. pull requests will fail to
 build when the tools above report errors.
 
-Additionally [Pylint](https://www.pylint.org/) is used by developers internally
+Additionally [Pylint] is used by developers internally
 at Artefactual to highlight other potential areas of improvement during
 code-review.
 
@@ -280,24 +280,24 @@ behaviour should be maintained.
 ### Documentation
 
 New classes and functions should generally be documented using
-[docstrings](https://en.wikipedia.org/wiki/Docstring#Python); these help in
+[docstrings]; these help in
 providing clarity, and can also be used to generate API documentation later.
 Generally any function which isn't obvious (any function longer than a line or
 two) should have a docstring. When in doubt: document! Python's
-[PEP 257](https://www.python.org/dev/peps/pep-0257/) document provides a useful
+[PEP 257] document provides a useful
 guideline for docstring style. Generally, prefer using
-[Sphinx-compatible docstrings](http://pythonhosted.org/an_example_pypi_project/sphinx.html#function-definitions). More
-[examples](http://sphinx-doc.org/domains.html#info-field-lists) and
-[attributes to use](http://sphinx-doc.org/domains.html#the-python-domain) can
+[Sphinx-compatible docstrings]. More
+[examples] and
+[attributes to use] can
 be found on the Sphinx website.
 
 ### Tests
 
 New code should also have unit tests. Tests are written in
-[unittest](https://docs.python.org/2/library/unittest.html) style and run with
-[py.test](http://pytest.org). For tests requiring the Django ORM, we use the
+[unittest] style and run with
+[py.test]. For tests requiring the Django ORM, we use the
 Django-provided
-[TestCase](https://docs.djangoproject.com/en/1.8/topics/testing/tools/#django.test.TestCase)
+[TestCase]
 , which extends `unittest.TestCase`.
 
 Tests are found in the `tests` directory, a sibling of the directory containing
@@ -306,7 +306,7 @@ for the same function and similar tests into the same class within that file.
 This will also allow you to share setup and teardown code.
 
 If you are testing code that makes HTTP requests, using
-[VCR.py](https://github.com/kevin1024/vcrpy) is highly recommended. It should
+[VCR.py] is highly recommended. It should
 already be a development dependency.
 
 ### Commit History
@@ -341,9 +341,9 @@ that git-bisect stays reliable for tracking down bugs.
 ### Commit messages
 
 The Archivematica project follows Chris Beams' guidelines on
-[How to Write a Git Commit Message](https://chris.beams.io/posts/git-commit/),
+[How to Write a Git Commit Message],
 and specifically the
-[seven rules of a great Git commit message](https://chris.beams.io/posts/git-commit/#seven-rules):
+[seven rules of a great Git commit message]:
 
 1. Separate subject from body with a blank line
 2. Limit the subject line to 50 characters
@@ -377,7 +377,7 @@ The unclear messages make it hard to tell at a glance what changed, and that
 makes browsing the commit history harder.
 
 A commit message should use the
-[imperative mood](https://chris.beams.io/posts/git-commit/#imperative) which
+[imperative mood] which
 should always be able to complete the following sentence:
 
     If applied, this commit will <your subject line here>
@@ -425,3 +425,29 @@ Further content comes after a blank line.
 [excellent]: https://help.github.com/articles/using-pull-requests
 [Line comment]: http://i.imgur.com/FsWppGN.png
 [code review guidelines]: code_review.md
+[interactive rebase feature]: http://www.git-scm.com/book/en/Git-Tools-Rewriting-History
+[Contributor's Agreement]: https://wiki.archivematica.org/images/e/e6/Archivematica-CLA-firstname-lastname-YYYY.pdf
+[Apache Foundation]: http://apache.org
+[contributor license]: http://www.apache.org/licenses/icla.txt
+[Artefactual Systems]: http://artefactual.com
+[PEP8]: https://www.python.org/dev/peps/pep-0008/
+[Black]: https://github.com/ambv/black
+[flake8]: https://pypi.python.org/pypi/flake8
+[continuous integration system]: https://travis-ci.org/artefactual/archivematica
+[Pylint]: https://www.pylint.org/
+[docstrings]: https://en.wikipedia.org/wiki/Docstring#Python
+[PEP 257]: https://www.python.org/dev/peps/pep-0257/
+[Sphinx-compatible docstrings]: http://pythonhosted.org/an_example_pypi_project/sphinx.html#function-definitions
+[examples]: http://sphinx-doc.org/domains.html#info-field-lists
+[attributes to use]: http://sphinx-doc.org/domains.html#the-python-domain
+[unittest]: https://docs.python.org/2/library/unittest.html
+[py.test]: http://pytest.org
+[TestCase]: https://docs.djangoproject.com/en/1.8/topics/testing/tools/#django.test.TestCase
+[VCR.py]: https://github.com/kevin1024/vcrpy
+[How to Write a Git Commit Message]: https://chris.beams.io/posts/git-commit/
+[seven rules of a great Git commit message]: https://chris.beams.io/posts/git-commit/#seven-rules
+[imperative mood]: https://chris.beams.io/posts/git-commit/#imperative
+
+
+
+
