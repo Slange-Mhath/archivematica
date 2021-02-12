@@ -369,8 +369,6 @@ def scan_file(event_queue, file_uuid, path, date, task_uuid):
 
 
 def call(jobs):
-    pass
-    """
     event_queue = []
 
     for job in jobs:
@@ -380,4 +378,4 @@ def call(jobs):
     with transaction.atomic():
         for e in event_queue:
             insertIntoEvents(**e)
-    """
+

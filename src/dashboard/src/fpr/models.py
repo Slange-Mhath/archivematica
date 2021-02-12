@@ -542,6 +542,7 @@ class FPCommand(VersionedModel, models.Model):
         ("transcription", _("Transcription")),
         ("validation", _("Validation")),
         ("verification", _("Verification")),
+        ("virus_scan", _("Virus scan")),
     )
     command_usage = models.CharField(
         _("command usage"), max_length=16, choices=COMMAND_USAGE_CHOICES
