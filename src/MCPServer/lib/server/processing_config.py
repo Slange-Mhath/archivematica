@@ -93,6 +93,14 @@ processing_fields["153c5f41-3cfb-47ba-9150-2dd44ebc27df"] = {
     "yes_option": "3a55f688-eca3-4ebc-a012-4ce68290e7b0",
     "no_option": "b7ce05f0-9d94-4b3e-86cc-d4b2c6dba546",
 }
+processing_fields["856d2d65-cd25-49fa-8da9-cabb78292894"] = {
+    "type": "boolean",
+    "name": "virus_scanning",
+    "yes_option": "6e431096-c403-4cbf-a59a-a26e86be54a8",
+    "no_option": "63767e4b-9ce8-4fe2-8724-65cc1f763de0",
+    "find_duplicates": True,
+    "label": "Virus scanning",
+}
 processing_fields["8ce07e94-6130-4987-96f0-2399ad45c5c2"] = {
     "type": "boolean",
     "name": "policy_checks_access_derivatives",

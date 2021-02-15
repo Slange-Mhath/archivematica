@@ -217,6 +217,11 @@ AUTOMATED_PROCESSING_CONFIG = """<processingMCP>
       <appliesTo>92879a29-45bf-4f0b-ac43-e64474f0f2f9</appliesTo>
       <goToChain>6eb8ebe7-fab3-4e4c-b9d7-14de17625baa</goToChain>
     </preconfiguredChoice>
+    <!-- Do you want to scan for viruses in metadata? -->
+    <preconfiguredChoice>
+      <appliesTo>856d2d65-cd25-49fa-8da9-cabb78292894</appliesTo>
+      <goToChain>6e431096-c403-4cbf-a59a-a26e86be54a8</goToChain>
+    </preconfiguredChoice>
   </preconfiguredChoices>
 </processingMCP>
 """

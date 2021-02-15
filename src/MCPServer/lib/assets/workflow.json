@@ -1,5 +1,17 @@
 {
     "chains": {
+        "6e431096-c403-4cbf-a59a-a26e86be54a8": {
+            "description": {
+                "en": "Yes"
+            },
+            "link_id": "8bc92801-4308-4e3b-885b-1a89fdcd3014"
+        },
+        "63767e4b-9ce8-4fe2-8724-65cc1f763de0": {
+            "description": {
+                "en": "No"
+            },
+            "link_id": "b2444a6e-c626-4487-9abc-1556dd89a8ae"
+        },
         "01d80b27-4ad1-4bd1-8f8d-f819f18bf685": {
             "description": {
                 "en": "Yes",
@@ -7737,6 +7749,25 @@
                 "no": "Normaliser"
             }
         },
+        "856d2d65-cd25-49fa-8da9-cabb78292894": {
+            "config": {
+                "@manager": "linkTaskManagerChoice",
+                "@model": "MicroServiceChainChoice",
+                "chain_choices": [
+                    "6e431096-c403-4cbf-a59a-a26e86be54a8",
+                    "63767e4b-9ce8-4fe2-8724-65cc1f763de0"
+                ]
+            },
+            "description": {
+                "en": "Do you want to scan for viruses?"
+            },
+            "exit_codes": {},
+            "fallback_job_status": "Failed",
+            "fallback_link_id": null,
+            "group": {
+                "en": "Process metadata directory"
+            }
+        },
         "8bc92801-4308-4e3b-885b-1a89fdcd3014": {
             "config": {
                 "@manager": "linkTaskManagerFiles",
@@ -9244,7 +9275,7 @@
             "exit_codes": {
                 "0": {
                     "job_status": "Completed successfully",
-                    "link_id": "8bc92801-4308-4e3b-885b-1a89fdcd3014"
+                    "link_id": "856d2d65-cd25-49fa-8da9-cabb78292894"
                 }
             },
             "fallback_job_status": "Failed",
