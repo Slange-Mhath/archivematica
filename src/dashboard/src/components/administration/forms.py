@@ -311,8 +311,8 @@ class ProcessingConfigurationForm(forms.Form):
         "92879a29-45bf-4f0b-ac43-e64474f0f2f9": _("Upload DIP"),
         "5e58066d-e113-4383-b20b-f301ed4d751c": _("Store DIP"),
         "cd844b6e-ab3c-4bc6-b34f-7103f88715de": _("Store DIP location"),
-        "856d2d65-cd25-49fa-8da9-cabb78292894": _("Virus scanning"),
-        "1E0A5F03-926C-49F5-A7F6-637732E73638": _("Virus scanning"),
+        "856d2d65-cd25-49fa-8da9-cabb78292894": _("Virus scanning in metadata"),
+        "1E0A5F03-926C-49F5-A7F6-637732E73638": _("Virus scanning in extracted files"),
     }
 
     name = forms.RegexField(max_length=16, regex=r"^\w+$", required=True)

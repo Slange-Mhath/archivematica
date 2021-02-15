@@ -99,7 +99,7 @@ processing_fields["856d2d65-cd25-49fa-8da9-cabb78292894"] = {
     "yes_option": "6e431096-c403-4cbf-a59a-a26e86be54a8",
     "no_option": "63767e4b-9ce8-4fe2-8724-65cc1f763de0",
     "find_duplicates": True,
-    "label": "Virus scanning",
+    "label": "Virus scanning in metadata",
 }
 processing_fields["1E0A5F03-926C-49F5-A7F6-637732E73638"] = {
     "type": "boolean",
@@ -107,7 +107,7 @@ processing_fields["1E0A5F03-926C-49F5-A7F6-637732E73638"] = {
     "yes_option": "60BB93C8-508A-4993-A4CF-889C8A372FC8",
     "no_option": "91A11366-4072-4038-8E60-D8C9E3F10CB7",
     "find_duplicates": True,
-    "label": "Virus scanning",
+    "label": "Virus scanning in extracted files",
 }
 processing_fields["8ce07e94-6130-4987-96f0-2399ad45c5c2"] = {
     "type": "boolean",
