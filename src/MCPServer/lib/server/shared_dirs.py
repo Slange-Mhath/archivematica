@@ -222,6 +222,11 @@ AUTOMATED_PROCESSING_CONFIG = """<processingMCP>
       <appliesTo>856d2d65-cd25-49fa-8da9-cabb78292894</appliesTo>
       <goToChain>6e431096-c403-4cbf-a59a-a26e86be54a8</goToChain>
     </preconfiguredChoice>
+    <!-- Do you want to scan for viruses in extracted files? -->
+    <preconfiguredChoice>
+      <appliesTo>1E0A5F03-926C-49F5-A7F6-637732E73638</appliesTo>
+      <goToChain>60BB93C8-508A-4993-A4CF-889C8A372FC8</goToChain>
+    </preconfiguredChoice>
   </preconfiguredChoices>
 </processingMCP>
 """
