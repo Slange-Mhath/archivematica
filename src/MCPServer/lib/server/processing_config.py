@@ -101,13 +101,21 @@ processing_fields["856d2d65-cd25-49fa-8da9-cabb78292894"] = {
     "find_duplicates": True,
     "label": "Virus scanning in metadata",
 }
-processing_fields["1E0A5F03-926C-49F5-A7F6-637732E73638"] = {
+processing_fields["1dad74a2-95df-4825-bbba-dca8b91d2371"] = {
     "type": "boolean",
     "name": "virus_scanning",
-    "yes_option": "60BB93C8-508A-4993-A4CF-889C8A372FC8",
-    "no_option": "91A11366-4072-4038-8E60-D8C9E3F10CB7",
+    "yes_option": "1ac7d792-b63f-46e0-9945-d48d9e5c02c9",
+    "no_option": "697c0883-798d-4af7-b8b6-101c7f709cd5",
     "find_duplicates": True,
     "label": "Virus scanning in extracted files",
+}
+processing_fields["7e81f94e-6441-4430-a12d-76df09181b66"] = {
+    "type": "boolean",
+    "name": "virus_scanning",
+    "yes_option": "97be337c-ff27-4869-bf63-ef1abc9df15d",
+    "no_option": "77355172-b437-4324-9dcc-e2607ad27cb1",
+    "find_duplicates": True,
+    "label": "Virus scanning initially",
 }
 processing_fields["8ce07e94-6130-4987-96f0-2399ad45c5c2"] = {
     "type": "boolean",

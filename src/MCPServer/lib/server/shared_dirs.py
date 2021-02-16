@@ -224,8 +224,14 @@ AUTOMATED_PROCESSING_CONFIG = """<processingMCP>
     </preconfiguredChoice>
     <!-- Do you want to scan for viruses in extracted files? -->
     <preconfiguredChoice>
-      <appliesTo>1E0A5F03-926C-49F5-A7F6-637732E73638</appliesTo>
-      <goToChain>60BB93C8-508A-4993-A4CF-889C8A372FC8</goToChain>
+      <appliesTo>1dad74a2-95df-4825-bbba-dca8b91d2371</appliesTo>
+      <goToChain>1ac7d792-b63f-46e0-9945-d48d9e5c02c9</goToChain>
+    </preconfiguredChoice>
+  </preconfiguredChoices>
+   <!-- Do you want to scan for viruses initially? -->
+    <preconfiguredChoice>
+      <appliesTo>7e81f94e-6441-4430-a12d-76df09181b66</appliesTo>
+      <goToChain>97be337c-ff27-4869-bf63-ef1abc9df15d</goToChain>
     </preconfiguredChoice>
   </preconfiguredChoices>
 </processingMCP>
