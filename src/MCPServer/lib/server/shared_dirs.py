@@ -236,6 +236,10 @@ AUTOMATED_PROCESSING_CONFIG = """<processingMCP>
       <appliesTo>390d6507-5029-4dae-bcd4-ce7178c9b560</appliesTo>
       <goToChain>34944d4f-762e-4262-8c79-b9fd48521ca0</goToChain>
     </preconfiguredChoice>
+    <preconfiguredChoice>
+      <appliesTo>97a5ddc0-d4e0-43ac-a571-9722405a0a9b</appliesTo>
+      <goToChain>3e8c0c39-3f30-4c9b-a449-85eef1b2a458</goToChain>
+    </preconfiguredChoice>
   </preconfiguredChoices>
 </processingMCP>
 """

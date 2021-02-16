@@ -48,6 +48,18 @@
             },
             "link_id": "c8f7bf7b-d903-42ec-bfdf-74d357ac4230"
         },
+        "3e8c0c39-3f30-4c9b-a449-85eef1b2a458": {
+            "description": {
+                "en": "Yes"
+            },
+            "link_id": "1ba589db-88d1-48cf-bb1a-a5f9d2b17378"
+        },
+        "7f5244fe-590b-4e38-beaf-0cf1ccb9e71b": {
+            "description": {
+                "en": "No"
+            },
+            "link_id": "087d27be-c719-47d8-9bbb-9a7d8b609c44"
+        },
         "01d80b27-4ad1-4bd1-8f8d-f819f18bf685": {
             "description": {
                 "en": "Yes",
@@ -1997,7 +2009,7 @@
             "exit_codes": {
                 "0": {
                     "job_status": "Completed successfully",
-                    "link_id": "1ba589db-88d1-48cf-bb1a-a5f9d2b17378"
+                    "link_id": "97a5ddc0-d4e0-43ac-a571-9722405a0a9b"
                 }
             },
             "fallback_job_status": "Failed",
@@ -2604,6 +2616,29 @@
                 "fr": "Transfert TRIM",
                 "pt_BR": "Transferência do TRIM ",
                 "no": "TRIM overføring"
+            }
+        },
+        "97a5ddc0-d4e0-43ac-a571-9722405a0a9b": {
+            "config": {
+                "@manager": "linkTaskManagerChoice",
+                "@model": "MicroServiceChainChoice",
+                "chain_choices": [
+                    "3e8c0c39-3f30-4c9b-a449-85eef1b2a458",
+                    "7f5244fe-590b-4e38-beaf-0cf1ccb9e71b"
+                ]
+            },
+            "description": {
+                "en": "Do you want to scan for viruses in submission documentation?"
+            },
+            "exit_codes": {},
+            "fallback_job_status": "Failed",
+            "fallback_link_id": null,
+            "group": {
+                "en": "Process submission documentation",
+                "fr": "Traiter la documentation de soumission",
+                "pt_BR": "Processar documentação de submissão",
+                "sv": "Bearbeta leveransdokumentation",
+                "no": "Prosesser innsendingsdokumentasjon"
             }
         },
         "1ba589db-88d1-48cf-bb1a-a5f9d2b17378": {
