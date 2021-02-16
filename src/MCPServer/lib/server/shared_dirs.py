@@ -227,11 +227,14 @@ AUTOMATED_PROCESSING_CONFIG = """<processingMCP>
       <appliesTo>1dad74a2-95df-4825-bbba-dca8b91d2371</appliesTo>
       <goToChain>1ac7d792-b63f-46e0-9945-d48d9e5c02c9</goToChain>
     </preconfiguredChoice>
-  </preconfiguredChoices>
-   <!-- Do you want to scan for viruses initially? -->
+    <!-- Do you want to scan for viruses initially? -->
     <preconfiguredChoice>
       <appliesTo>7e81f94e-6441-4430-a12d-76df09181b66</appliesTo>
       <goToChain>97be337c-ff27-4869-bf63-ef1abc9df15d</goToChain>
+    </preconfiguredChoice>
+    <preconfiguredChoice>
+      <appliesTo>390d6507-5029-4dae-bcd4-ce7178c9b560</appliesTo>
+      <goToChain>34944d4f-762e-4262-8c79-b9fd48521ca0</goToChain>
     </preconfiguredChoice>
   </preconfiguredChoices>
 </processingMCP>

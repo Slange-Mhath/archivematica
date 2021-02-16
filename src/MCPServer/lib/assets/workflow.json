@@ -24,7 +24,7 @@
             },
             "link_id": "aaa929e4-5c35-447e-816a-033a66b9b90b"
         },
-           "97be337c-ff27-4869-bf63-ef1abc9df15d": {
+        "97be337c-ff27-4869-bf63-ef1abc9df15d": {
             "description": {
                 "en": "Yes"
             },
@@ -35,6 +35,18 @@
                 "en": "No"
             },
             "link_id": "559d9b14-05bf-4136-918a-de74a821b759"
+        },
+        "34944d4f-762e-4262-8c79-b9fd48521ca0": {
+            "description": {
+                "en": "Yes"
+            },
+            "link_id": "21d6d597-b876-4b3f-ab85-f97356f10507"
+        },
+        "63be6081-bee8-4cf5-a453-91893e31940f": {
+            "description": {
+                "en": "No"
+            },
+            "link_id": "c8f7bf7b-d903-42ec-bfdf-74d357ac4230"
         },
         "01d80b27-4ad1-4bd1-8f8d-f819f18bf685": {
             "description": {
@@ -2989,6 +3001,30 @@
                 "fr": "Transfert TRIM",
                 "pt_BR": "Transferência do TRIM ",
                 "no": "TRIM overføring"
+            }
+        },
+        "390d6507-5029-4dae-bcd4-ce7178c9b560": {
+            "config": {
+                "@manager": "linkTaskManagerChoice",
+                "@model": "MicroServiceChainChoice",
+                "chain_choices": [
+                    "34944d4f-762e-4262-8c79-b9fd48521ca0",
+                    "63be6081-bee8-4cf5-a453-91893e31940f"
+                ]
+            },
+            "description": {
+                "en": "Do you want to scan for viruses on attachments?"
+            },
+            "exit_codes": {},
+            "fallback_job_status": "Failed",
+            "fallback_link_id": null,
+            "group": {
+                "en": "Scan for viruses",
+                "fr": "Lancer l’antivirus",
+                "ja": "ウイルスをスキャンする",
+                "pt_BR": "Procurar por vírus",
+                "sv": "Sök efter virus",
+                "no": "Søk etter virus"
             }
         },
         "21d6d597-b876-4b3f-ab85-f97356f10507": {
@@ -9409,11 +9445,11 @@
             "exit_codes": {
                 "0": {
                     "job_status": "Completed successfully",
-                    "link_id": "21d6d597-b876-4b3f-ab85-f97356f10507"
+                    "link_id": "390d6507-5029-4dae-bcd4-ce7178c9b560"
                 }
             },
             "fallback_job_status": "Failed",
-            "fallback_link_id": "21d6d597-b876-4b3f-ab85-f97356f10507",
+            "fallback_link_id": "390d6507-5029-4dae-bcd4-ce7178c9b560",
             "group": {
                 "en": "Extract attachments",
                 "es": "Extraer ficheros adjuntos",

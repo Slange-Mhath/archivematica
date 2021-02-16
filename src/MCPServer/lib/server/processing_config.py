@@ -117,6 +117,14 @@ processing_fields["7e81f94e-6441-4430-a12d-76df09181b66"] = {
     "find_duplicates": True,
     "label": "Virus scanning initially",
 }
+processing_fields["390d6507-5029-4dae-bcd4-ce7178c9b560"] = {
+    "type": "boolean",
+    "name": "virus_scanning",
+    "yes_option": "34944d4f-762e-4262-8c79-b9fd48521ca0",
+    "no_option": "63be6081-bee8-4cf5-a453-91893e31940f",
+    "find_duplicates": True,
+    "label": "Virus scanning on attachments",
+}
 processing_fields["8ce07e94-6130-4987-96f0-2399ad45c5c2"] = {
     "type": "boolean",
     "name": "policy_checks_access_derivatives",

@@ -314,6 +314,7 @@ class ProcessingConfigurationForm(forms.Form):
         "856d2d65-cd25-49fa-8da9-cabb78292894": _("Virus scanning in metadata"),
         "1dad74a2-95df-4825-bbba-dca8b91d2371": _("Virus scanning in extracted files"),
         "7e81f94e-6441-4430-a12d-76df09181b66": _("Virus scanning initially"),
+        "390d6507-5029-4dae-bcd4-ce7178c9b560": _("Virus scanning on attachments"),
 
     }
 
