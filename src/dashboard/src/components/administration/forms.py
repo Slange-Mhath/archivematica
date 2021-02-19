@@ -30,8 +30,6 @@ from components import helpers
 from installer.forms import site_url_field, load_site_url
 from main.models import Agent, TaxonomyTerm
 
-import storageService as storage_service
-
 
 class AgentForm(forms.ModelForm):
     class Meta:

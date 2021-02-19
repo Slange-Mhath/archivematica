@@ -12,14 +12,12 @@ import abc
 import logging
 import os
 import shutil
-from collections import OrderedDict
 
 from django.conf import settings
 from lxml import etree
 import six
 
 from server.workflow_abilities import choice_is_available
-from server.translation import TranslationLabel
 import storageService as storage_service
 
 
