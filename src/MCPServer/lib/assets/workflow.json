@@ -60,6 +60,18 @@
             },
             "link_id": "087d27be-c719-47d8-9bbb-9a7d8b609c44"
         },
+        "d9607935-cfcc-4add-aa4b-d31fb71fe92a": {
+            "description": {
+                "en": "Yes"
+            },
+            "link_id": "307edcde-ad10-401c-92c4-652917c993ed"
+        },
+        "61ec8c39-db1b-439b-8723-2f647d5863ba": {
+            "description": {
+                "en": "No"
+            },
+            "link_id": "ec3c965c-c056-47e3-a551-ad1966e00824"
+        },
         "01d80b27-4ad1-4bd1-8f8d-f819f18bf685": {
             "description": {
                 "en": "Yes",
@@ -3755,6 +3767,31 @@
                 "pt_BR": "Caracterizar e extrair metadados",
                 "sv": "Karaktärisera och extrahera metadata",
                 "no": "Karakteriser og hent ut metadata"
+            }
+        },
+        "ebec8f84-243c-40ea-815f-6f7237a88448": {
+            "config": {
+                "@manager": "linkTaskManagerChoice",
+                "@model": "MicroServiceChainChoice",
+                "chain_choices": [
+                    "d9607935-cfcc-4add-aa4b-d31fb71fe92a",
+                    "61ec8c39-db1b-439b-8723-2f647d5863ba"
+                ]
+            },
+            "description": {
+                "en": "Do you want to generate a METS file?"
+            },
+            "exit_codes": {},
+            "fallback_job_status": "Failed",
+            "fallback_link_id": null,
+             "group": {
+                "en": "Generate METS.xml document",
+                "es": "Generar METS.xml",
+                "fr": "Générer un document METS.xml",
+                "ja": "METS.xml文書 を生成",
+                "pt_BR": "Gerar documentos METS.xml",
+                "sv": "Skapa METS.xml dokument",
+                "no": "Generer METS.xml-dokument"
             }
         },
         "307edcde-ad10-401c-92c4-652917c993ed": {

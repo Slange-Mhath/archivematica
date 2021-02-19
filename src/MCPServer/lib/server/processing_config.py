@@ -287,6 +287,9 @@ processing_fields = [
         name="store_dip_location",
         purpose="DS",
     ),
+    ChainChoicesField(
+        link_id="ebec8f84-243c-40ea-815f-6f7237a88448", name="generate_mets"
+    ),
     SharedChainChoicesField(
         link_id="856d2d65-cd25-49fa-8da9-cabb78292894",
         name="virus_scanning",
