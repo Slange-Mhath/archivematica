@@ -268,12 +268,13 @@ class ProcessingConfigurationForm(forms.Form):
     (1) load pre-configured choices, and (2) additional RPC to save the
     configuration.
     """
+
     EMPTY_CHOICES = [(None, _("None"))]
     DEFAULT_FIELD_OPTS = {"required": False, "initial": None}
 
     LABELS = {
         # MCPServer does not extract messages.
-        "virus_scanning": _("Virus scanning"),
+        "virus_scanning": _("Virus scanning")
     }
 
     name = forms.RegexField(max_length=16, regex=r"^\w+$", required=True)
@@ -307,9 +308,7 @@ class ProcessingConfigurationForm(forms.Form):
             for item in field["choices"]:
                 opts["choices"].append((item["value"], item["label"]))
             self.fields[field["id"]] = forms.ChoiceField(
-                widget=Select(attrs={
-                    "class": "form-control",
-                }), **opts
+                widget=Select(attrs={"class": "form-control"}), **opts
             )
 
     def get_processing_config_path(self, name):
@@ -359,12 +358,12 @@ class ProcessingConfigurationForm(forms.Form):
                 if item["value"] == choice:
                     matches = item["applies_to"]
             if not matches:
-                raise forms.ValidationError("Unknown value for processing field %s: %s", link_id, choice)
+                raise forms.ValidationError(
+                    "Unknown value for processing field %s: %s", link_id, choice
+                )
             for applies_to, go_to_chain, label in matches:
                 comment = "{}: {}".format(self.fields[link_id].label, label)
-                config.add_choice(
-                    applies_to, go_to_chain, comment,
-                )
+                config.add_choice(applies_to, go_to_chain, comment)
 
         config.save(self.get_processing_config_path(name))
 
@@ -378,9 +377,7 @@ class PreconfiguredChoices(object):
         self.xml = etree.Element("processingMCP")
         self.choices = etree.SubElement(self.xml, "preconfiguredChoices")
 
-    def add_choice(
-        self, applies_to_text, go_to_chain_text, comment=None
-    ):
+    def add_choice(self, applies_to_text, go_to_chain_text, comment=None):
         if comment is not None:
             comment = etree.Comment(" {} ".format(comment))
             self.choices.append(comment)

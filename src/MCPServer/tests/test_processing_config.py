@@ -135,8 +135,7 @@ def test_replace_dict_field(mocker, _workflow):
                 name="select_format_id_tool_transfer",
             ),
             ReplaceDictField(
-                link_id="f19926dd-8fb5-4c79-8ade-c83f61f55b40",
-                name="delete_packages",
+                link_id="f19926dd-8fb5-4c79-8ade-c83f61f55b40", name="delete_packages"
             ),
         ],
     )
@@ -208,8 +207,7 @@ def test_chain_choices_field(mocker, _workflow):
         "server.processing_config.processing_fields",
         new=[
             ChainChoicesField(
-                link_id="eeb23509-57e2-4529-8857-9d62525db048",
-                name="reminder",
+                link_id="eeb23509-57e2-4529-8857-9d62525db048", name="reminder"
             ),
             ChainChoicesField(
                 link_id="cb8e5706-e73f-472f-ad9b-d1236af8095f",
@@ -338,7 +336,7 @@ def test_shared_choices_field(mocker, _workflow):
                     "390d6507-5029-4dae-bcd4-ce7178c9b560",
                     "97a5ddc0-d4e0-43ac-a571-9722405a0a9b",
                 ],
-            ),
+            )
         ],
     )
 

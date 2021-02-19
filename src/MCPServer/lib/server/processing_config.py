@@ -66,10 +66,10 @@ class StorageLocationField(ProcessingConfigField):
     def read_config(self, options):
         self.purpose = options["purpose"]
         if self.purpose not in self.ALLOWED_PURPOSES:
-            raise ValueError("Purpose %s is invalid; valid purposes: %s." % (
-                self.purpose,
-                ", ".join(self.ALLOWED_PURPOSES),
-            ))
+            raise ValueError(
+                "Purpose %s is invalid; valid purposes: %s."
+                % (self.purpose, ", ".join(self.ALLOWED_PURPOSES))
+            )
 
     def add_choices(self, workflow, lang):
         value = "/api/v2/location/default/%s/" % self.purpose
@@ -77,9 +77,7 @@ class StorageLocationField(ProcessingConfigField):
             {
                 "value": value,
                 "label": "Default location",
-                "applies_to": [
-                    (self.link.id, value, "Default location"),
-                ]
+                "applies_to": [(self.link.id, value, "Default location")],
             }
         )
 
@@ -91,12 +89,9 @@ class StorageLocationField(ProcessingConfigField):
                     {
                         "value": loc["resource_uri"],
                         "label": label,
-                        "applies_to": [
-                            (self.link.id, loc["resource_uri"], label),
-                        ],
+                        "applies_to": [(self.link.id, loc["resource_uri"], label)],
                     }
                 )
-
 
     def get_storage_locations(self):
         return storage_service.get_location(purpose=self.purpose)
@@ -113,9 +108,7 @@ class ReplaceDictField(ProcessingConfigField):
                 {
                     "value": item["id"],
                     "label": label,
-                    "applies_to": [
-                        (self.link.id, item["id"], label),
-                    ],
+                    "applies_to": [(self.link.id, item["id"], label)],
                 }
             )
 
@@ -145,9 +138,7 @@ class ChainChoicesField(ProcessingConfigField):
                 {
                     "value": chain_id,
                     "label": chain.get_label("description", lang),
-                    "applies_to": [
-                        (self.link_id, chain_id, chain_desc),
-                    ],
+                    "applies_to": [(self.link_id, chain_id, chain_desc)],
                 }
             )
             if not self.find_duplicates:
@@ -198,11 +189,7 @@ class SharedChainChoicesField(ProcessingConfigField):
                         if link_id == self.link.id:
                             value = chain_id
             self.choices.append(
-                {
-                    "value": value,
-                    "label": choice,
-                    "applies_to": applies_to,
-                }
+                {"value": value, "label": choice, "applies_to": applies_to}
             )
 
 
@@ -223,20 +210,16 @@ processing_fields = [
         name="select_format_id_tool_transfer",
     ),
     ChainChoicesField(
-        link_id="dec97e3c-5598-4b99-b26e-f87a435a6b7f",
-        name="extract_packages",
+        link_id="dec97e3c-5598-4b99-b26e-f87a435a6b7f", name="extract_packages"
     ),
     ReplaceDictField(
-        link_id="f19926dd-8fb5-4c79-8ade-c83f61f55b40",
-        name="delete_packages",
+        link_id="f19926dd-8fb5-4c79-8ade-c83f61f55b40", name="delete_packages"
     ),
     ChainChoicesField(
-        link_id="70fc7040-d4fb-4d19-a0e6-792387ca1006",
-        name="policy_checks_originals",
+        link_id="70fc7040-d4fb-4d19-a0e6-792387ca1006", name="policy_checks_originals"
     ),
     ChainChoicesField(
-        link_id="accea2bf-ba74-4a3a-bb97-614775c74459",
-        name="examine_contents",
+        link_id="accea2bf-ba74-4a3a-bb97-614775c74459", name="examine_contents"
     ),
     ChainChoicesField(
         link_id="bb194013-597c-4e4a-8493-b36d190f8717",
@@ -259,8 +242,7 @@ processing_fields = [
         ignored_choices=["Redo", "Reject"],
     ),
     ReplaceDictField(
-        link_id="498f7a6d-1b8c-431a-aa5d-83f14f3c5e65",
-        name="normalize_thumbnail_mode",
+        link_id="498f7a6d-1b8c-431a-aa5d-83f14f3c5e65", name="normalize_thumbnail_mode"
     ),
     ChainChoicesField(
         link_id="153c5f41-3cfb-47ba-9150-2dd44ebc27df",
@@ -270,33 +252,23 @@ processing_fields = [
         link_id="8ce07e94-6130-4987-96f0-2399ad45c5c2",
         name="policy_checks_access_derivatives",
     ),
+    ChainChoicesField(link_id="a2ba5278-459a-4638-92d9-38eb1588717d", name="bind_pids"),
     ChainChoicesField(
-        link_id="a2ba5278-459a-4638-92d9-38eb1588717d",
-        name="bind_pids",
+        link_id="d0dfa5fc-e3c2-4638-9eda-f96eea1070e0", name="normative_structmap"
     ),
+    ChainChoicesField(link_id="eeb23509-57e2-4529-8857-9d62525db048", name="reminder"),
     ChainChoicesField(
-        link_id="d0dfa5fc-e3c2-4638-9eda-f96eea1070e0",
-        name="normative_structmap",
-    ),
-    ChainChoicesField(
-        link_id="eeb23509-57e2-4529-8857-9d62525db048",
-        name="reminder",
-    ),
-    ChainChoicesField(
-        link_id="82ee9ad2-2c74-4c7c-853e-e4eaf68fc8b6",
-        name="transcribe_file",
+        link_id="82ee9ad2-2c74-4c7c-853e-e4eaf68fc8b6", name="transcribe_file"
     ),
     ReplaceDictField(
         link_id="087d27be-c719-47d8-9bbb-9a7d8b609c44",
         name="select_format_id_tool_submissiondocs",
     ),
     ReplaceDictField(
-        link_id="01d64f58-8295-4b7b-9cab-8f1b153a504f",
-        name="compression_algo",
+        link_id="01d64f58-8295-4b7b-9cab-8f1b153a504f", name="compression_algo"
     ),
     ReplaceDictField(
-        link_id="01c651cb-c174-4ba4-b985-1d87a44d6754",
-        name="compression_level",
+        link_id="01c651cb-c174-4ba4-b985-1d87a44d6754", name="compression_level"
     ),
     ChainChoicesField(
         link_id="2d32235c-02d4-4686-88a6-96f4d6c7b1c3",
@@ -309,13 +281,9 @@ processing_fields = [
         purpose="AS",
     ),
     ChainChoicesField(
-        link_id="92879a29-45bf-4f0b-ac43-e64474f0f2f9",
-        name="upload_dip",
+        link_id="92879a29-45bf-4f0b-ac43-e64474f0f2f9", name="upload_dip"
     ),
-    ChainChoicesField(
-        link_id="5e58066d-e113-4383-b20b-f301ed4d751c",
-        name="store_dip",
-    ),
+    ChainChoicesField(link_id="5e58066d-e113-4383-b20b-f301ed4d751c", name="store_dip"),
     StorageLocationField(
         link_id="cd844b6e-ab3c-4bc6-b34f-7103f88715de",
         name="store_dip_location",
