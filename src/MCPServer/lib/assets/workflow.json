@@ -2685,7 +2685,7 @@
                 ]
             },
             "description": {
-                "en": "Do you want to scan for viruses?"
+                "en": "Do you want to scan for viruses in directories?"
             },
             "exit_codes": {},
             "fallback_job_status": "Failed",
@@ -2707,7 +2707,7 @@
                 "stdout_file": null
             },
             "description": {
-                "en": "Scan for viruses",
+                "en": "Scan for viruses in directories",
                 "fr": "Lancer l’antivirus",
                 "ja": "ウイルスをスキャンする",
                 "pt_BR": "Procurar por vírus",
@@ -3048,7 +3048,7 @@
                 ]
             },
             "description": {
-                "en": "Do you want to scan for viruses on attachments?"
+                "en": "Do you want to scan for viruses in attachments?"
             },
             "exit_codes": {},
             "fallback_job_status": "Failed",
@@ -3075,7 +3075,7 @@
                 "stdout_file": null
             },
             "description": {
-                "en": "Scan for viruses",
+                "en": "Scan for viruses in attachments",
                 "fr": "Lancer l’antivirus",
                 "ja": "ウイルスをスキャンする",
                 "pt_BR": "Procurar por vírus",
