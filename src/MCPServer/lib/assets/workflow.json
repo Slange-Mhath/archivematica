@@ -12,6 +12,18 @@
             },
             "link_id": "b2444a6e-c626-4487-9abc-1556dd89a8ae"
         },
+        "a2db77ce-4203-4625-ac67-256a631698f3": {
+            "description": {
+                "en": "Yes"
+            },
+            "link_id": "c5766540-adf3-4d7f-bdce-b48d6cf90669"
+        },
+         "c1673b73-7211-47b6-b643-590028dd4774": {
+            "description": {
+                "en": "No"
+            },
+            "link_id": "3e25bda6-5314-4bb4-aa1e-90900dce887d"
+         },
          "b13ba189-d594-44e7-b11a-3db4308b99be": {
             "description": {
                 "en": "Yes"
@@ -5326,6 +5338,31 @@
                 "no": "Legg til README-fil"
             }
         },
+         "c5766540-adf3-4d7f-bdce-b48d6cf90669": {
+            "config": {
+                "@manager": "linkTaskManagerChoice",
+                "@model": "MicroServiceChainChoice",
+                "chain_choices": [
+                    "a2db77ce-4203-4625-ac67-256a631698f3",
+                    "c1673b73-7211-47b6-b643-590028dd4774"
+                ]
+            },
+            "description": {
+                "en": "Do you want to generate a METS file?"
+            },
+            "exit_codes": {},
+            "fallback_job_status": "Failed",
+            "fallback_link_id": null,
+            "group": {
+                "en": "Generate METS.xml document",
+                "es": "Generar METS.xml",
+                "fr": "Générer un document METS.xml",
+                "ja": "METS.xml文書 を生成",
+                "pt_BR": "Gerar documentos METS.xml",
+                "sv": "Skapa METS.xml dokument",
+                "no": "Generer METS.xml-dokument"
+            }
+        },
         "53e14112-21bb-46f0-aed3-4e8c2de6678f": {
             "config": {
                 "@manager": "linkTaskManagerDirectories",
@@ -8632,7 +8669,7 @@
             "exit_codes": {
                 "0": {
                     "job_status": "Completed successfully",
-                    "link_id": "53e14112-21bb-46f0-aed3-4e8c2de6678f"
+                    "link_id": "c5766540-adf3-4d7f-bdce-b48d6cf90669"
                 }
             },
             "fallback_job_status": "Failed",
