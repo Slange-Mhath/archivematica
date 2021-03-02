@@ -12,6 +12,18 @@
             },
             "link_id": "b2444a6e-c626-4487-9abc-1556dd89a8ae"
         },
+        "1e72d9b2-3570-4a5e-bbc4-522bbd74fa06": {
+            "description": {
+                "en": "Yes"
+            },
+            "link_id": "18c37bff-fce9-4b40-a50a-022ea0386f1a"
+        },
+         "4127c85a-e46e-4f8c-bde1-478f1939ba5f": {
+            "description": {
+                "en": "No"
+            },
+            "link_id": "523c97cc-b267-4cfb-8209-d99e523bf4b3"
+         },
         "a2db77ce-4203-4625-ac67-256a631698f3": {
             "description": {
                 "en": "Yes"
@@ -2437,6 +2449,30 @@
                 "pt_BR": "Normalizar",
                 "sv": "Normalisera",
                 "no": "Normaliser"
+            }
+        },
+        "004215bc-c458-4966-8165-a05960174c37": {
+            "config": {
+                "@manager": "linkTaskManagerChoice",
+                "@model": "MicroServiceChainChoice",
+                "chain_choices": [
+                    "1e72d9b2-3570-4a5e-bbc4-522bbd74fa06",
+                    "4127c85a-e46e-4f8c-bde1-478f1939ba5f"
+                ]
+            },
+            "description": {
+                "en": "Do you want to generate a METS file?"
+            },
+            "exit_codes": {},
+            "fallback_job_status": "Failed",
+            "fallback_link_id": null,
+            "group": {
+                "en": "Generate AIP METS",
+                "fr": "Générer un AIP METS",
+                "ja": "AIP METSを生成",
+                "pt_BR": "Gerar AIP METS",
+                "sv": "Genrerera AIP METS",
+                "no": "Generer AIP METS"
             }
         },
         "18c37bff-fce9-4b40-a50a-022ea0386f1a": {
