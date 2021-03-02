@@ -12,6 +12,18 @@
             },
             "link_id": "b2444a6e-c626-4487-9abc-1556dd89a8ae"
         },
+         "b13ba189-d594-44e7-b11a-3db4308b99be": {
+            "description": {
+                "en": "Yes"
+            },
+            "link_id": "ccf8ec5c-3a9a-404a-a7e7-8f567d3b36a0"
+        },
+        "06292892-80c8-4bd9-9823-54fc34fa62f7": {
+            "description": {
+                "en": "No"
+            },
+            "link_id": "523c97cc-b267-4cfb-8209-d99e523bf4b3"
+        },
         "1ac7d792-b63f-46e0-9945-d48d9e5c02c9": {
             "description": {
                 "en": "Yes"
@@ -474,7 +486,7 @@
                 "sv": "Nej",
                 "no": "Nei"
             },
-            "link_id": "ccf8ec5c-3a9a-404a-a7e7-8f567d3b36a0"
+            "link_id": "3c445ba0-7cf1-414d-a93c-a7292e2aff41"
         },
         "6953950b-c101-4f4c-a0c3-0cd0684afe5e": {
             "description": {
@@ -10564,6 +10576,30 @@
                 "pt_BR": "Extrair pacotes",
                 "sv": "Extrahera paket",
                 "no": "Pakk ut pakker"
+            }
+        },
+        "97a5ddc0-d4e0-43ac-a571-9722405a0a9b": {
+            "config": {
+                "@manager": "linkTaskManagerChoice",
+                "@model": "MicroServiceChainChoice",
+                "chain_choices": [
+                    "b13ba189-d594-44e7-b11a-3db4308b99be",
+                    "06292892-80c8-4bd9-9823-54fc34fa62f7"
+                ]
+            },
+            "description": {
+                "en": "Do you want to generate a METS file?"
+            },
+            "exit_codes": {},
+            "fallback_job_status": "Failed",
+            "fallback_link_id": null,
+            "group": {
+                "en": "Generate AIP METS",
+                "fr": "Générer un AIP METS",
+                "ja": "AIP METSを生成",
+                "pt_BR": "Gerar AIP METS",
+                "sv": "Genrerera AIP METS",
+                "no": "Generer AIP METS"
             }
         },
         "ccf8ec5c-3a9a-404a-a7e7-8f567d3b36a0": {
