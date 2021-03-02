@@ -3839,7 +3839,7 @@
                 ]
             },
             "description": {
-                "en": "Do you want to generate a METS file?"
+                "en": "Do you want to generate a transfer METS file?"
             },
             "exit_codes": {},
             "fallback_job_status": "Failed",
@@ -5390,13 +5390,12 @@
             "fallback_job_status": "Failed",
             "fallback_link_id": null,
             "group": {
-                "en": "Generate METS.xml document",
-                "es": "Generar METS.xml",
-                "fr": "Générer un document METS.xml",
-                "ja": "METS.xml文書 を生成",
-                "pt_BR": "Gerar documentos METS.xml",
-                "sv": "Skapa METS.xml dokument",
-                "no": "Generer METS.xml-dokument"
+                "en": "Generate AIP METS",
+                "fr": "Générer un AIP METS",
+                "ja": "AIP METSを生成",
+                "pt_BR": "Gerar AIP METS",
+                "sv": "Genrerera AIP METS",
+                "no": "Generer AIP METS"
             }
         },
         "53e14112-21bb-46f0-aed3-4e8c2de6678f": {

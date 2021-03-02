@@ -76,20 +76,25 @@ DEFAULT_PROCESSING_CONFIG = """<processingMCP>
       <appliesTo>d0dfa5fc-e3c2-4638-9eda-f96eea1070e0</appliesTo>
       <goToChain>65273f18-5b4e-4944-af4f-09be175a88e8</goToChain>
     </preconfiguredChoice>
-    <!-- Generate METS?: Yes -->
+    <!-- Generate AIP METS: Yes -->
     <preconfiguredChoice>
       <appliesTo>3c445ba0-7cf1-414d-a93c-a7292e2aff41</appliesTo>
       <goToChain>b13ba189-d594-44e7-b11a-3db4308b99be</goToChain>
     </preconfiguredChoice>
-    <!-- Generate METS: Yes -->
+    <!-- Generate AIP METS: Yes -->
     <preconfiguredChoice>
       <appliesTo>c5766540-adf3-4d7f-bdce-b48d6cf90669</appliesTo>
       <goToChain>a2db77ce-4203-4625-ac67-256a631698f3</goToChain>
     </preconfiguredChoice>
-    <!-- Generate METS: Yes -->
+    <!-- Generate AIP METS: Yes -->
     <preconfiguredChoice>
       <appliesTo>004215bc-c458-4966-8165-a05960174c37</appliesTo>
       <goToChain>1e72d9b2-3570-4a5e-bbc4-522bbd74fa06</goToChain>
+    </preconfiguredChoice>
+    <!-- Generate transfer METS: Yes -->
+    <preconfiguredChoice>
+      <appliesTo>ebec8f84-243c-40ea-815f-6f7237a88448</appliesTo>
+      <goToChain>d9607935-cfcc-4add-aa4b-d31fb71fe92a</goToChain>
     </preconfiguredChoice>
   </preconfiguredChoices>
 </processingMCP>
@@ -257,25 +262,25 @@ AUTOMATED_PROCESSING_CONFIG = """<processingMCP>
       <appliesTo>97a5ddc0-d4e0-43ac-a571-9722405a0a9b</appliesTo>
       <goToChain>3e8c0c39-3f30-4c9b-a449-85eef1b2a458</goToChain>
     </preconfiguredChoice>
-    <!-- Generate METS -->
-    <preconfiguredChoice>
-      <appliesTo>ebec8f84-243c-40ea-815f-6f7237a88448</appliesTo>
-      <goToChain>d9607935-cfcc-4add-aa4b-d31fb71fe92a</goToChain>
-    </preconfiguredChoice>
-    <!-- Generate METS?: Yes -->
+    <!-- Generate AIP METS: Yes -->
     <preconfiguredChoice>
       <appliesTo>3c445ba0-7cf1-414d-a93c-a7292e2aff41</appliesTo>
       <goToChain>b13ba189-d594-44e7-b11a-3db4308b99be</goToChain>
     </preconfiguredChoice>
-    <!-- Generate METS: Yes -->
+    <!-- Generate AIP METS: Yes -->
     <preconfiguredChoice>
       <appliesTo>c5766540-adf3-4d7f-bdce-b48d6cf90669</appliesTo>
       <goToChain>a2db77ce-4203-4625-ac67-256a631698f3</goToChain>
     </preconfiguredChoice>
-    <!-- Generate METS: Yes -->
+    <!-- Generate AIP METS: Yes -->
     <preconfiguredChoice>
       <appliesTo>004215bc-c458-4966-8165-a05960174c37</appliesTo>
       <goToChain>1e72d9b2-3570-4a5e-bbc4-522bbd74fa06</goToChain>
+    </preconfiguredChoice>
+    <!-- Generate transfer METS: Yes -->
+    <preconfiguredChoice>
+      <appliesTo>ebec8f84-243c-40ea-815f-6f7237a88448</appliesTo>
+      <goToChain>d9607935-cfcc-4add-aa4b-d31fb71fe92a</goToChain>
     </preconfiguredChoice>
   </preconfiguredChoices>
 </processingMCP>
