@@ -297,6 +297,14 @@ processing_fields = [
             "97a5ddc0-d4e0-43ac-a571-9722405a0a9b",
         ],
     ),
+    SharedChainChoicesField(
+        link_id="3c445ba0-7cf1-414d-a93c-a7292e2aff41",
+        name="generate_mets",
+        related_links=[
+            "c5766540-adf3-4d7f-bdce-b48d6cf90669",
+            "004215bc-c458-4966-8165-a05960174c37",
+        ],
+    ),
 ]
 
 

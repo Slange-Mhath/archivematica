@@ -336,7 +336,15 @@ def test_shared_choices_field(mocker, _workflow):
                     "390d6507-5029-4dae-bcd4-ce7178c9b560",
                     "97a5ddc0-d4e0-43ac-a571-9722405a0a9b",
                 ],
-            )
+            ),
+            SharedChainChoicesField(
+                link_id="3c445ba0-7cf1-414d-a93c-a7292e2aff41",
+                name="generate_mets",
+                related_links=[
+                    "c5766540-adf3-4d7f-bdce-b48d6cf90669",
+                    "004215bc-c458-4966-8165-a05960174c37",
+                ],
+            ),
         ],
     )
 
@@ -404,6 +412,55 @@ def test_shared_choices_field(mocker, _workflow):
                         (
                             "97a5ddc0-d4e0-43ac-a571-9722405a0a9b",
                             "7f5244fe-590b-4e38-beaf-0cf1ccb9e71b",
+                            "No",
+                        ),
+                    ],
+                },
+            ],
+        },
+        {
+            "id": "3c445ba0-7cf1-414d-a93c-a7292e2aff41",
+            "label": "Do you want to generate a METS file?",
+            "name": "generate_mets",
+            "choices": [
+                {
+                    "value": "b13ba189-d594-44e7-b11a-3db4308b99be",
+                    "label": "Yes",
+                    "applies_to": [
+                        (
+                            "3c445ba0-7cf1-414d-a93c-a7292e2aff41",
+                            "b13ba189-d594-44e7-b11a-3db4308b99be",
+                            "Yes",
+                        ),
+                        (
+                            "c5766540-adf3-4d7f-bdce-b48d6cf90669",
+                            "a2db77ce-4203-4625-ac67-256a631698f3",
+                            "Yes",
+                        ),
+                        (
+                            "004215bc-c458-4966-8165-a05960174c37",
+                            "1e72d9b2-3570-4a5e-bbc4-522bbd74fa06",
+                            "Yes",
+                        ),
+                    ],
+                },
+                {
+                    "value": "06292892-80c8-4bd9-9823-54fc34fa62f7",
+                    "label": "No",
+                    "applies_to": [
+                        (
+                            "3c445ba0-7cf1-414d-a93c-a7292e2aff41",
+                            "06292892-80c8-4bd9-9823-54fc34fa62f7",
+                            "No",
+                        ),
+                        (
+                            "c5766540-adf3-4d7f-bdce-b48d6cf90669",
+                            "c1673b73-7211-47b6-b643-590028dd4774",
+                            "No",
+                        ),
+                        (
+                            "004215bc-c458-4966-8165-a05960174c37",
+                            "4127c85a-e46e-4f8c-bde1-478f1939ba5f",
                             "No",
                         ),
                     ],

@@ -273,6 +273,7 @@ class ProcessingConfigurationForm(forms.Form):
     LABELS = {
         # MCPServer does not extract messages.
         "virus_scanning": _("Virus scanning"),
+        "generate_mets": _("Generate METS"),
     }
 
     name = forms.RegexField(max_length=16, regex=r"^\w+$", required=True)
