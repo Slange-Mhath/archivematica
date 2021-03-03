@@ -343,7 +343,7 @@ def test_shared_choices_field(mocker, _workflow):
     assert get_processing_fields(_workflow) == [
         {
             "id": "856d2d65-cd25-49fa-8da9-cabb78292894",
-            "label": "Do you want to scan for viruses?",
+            "label": "Do you want to scan for viruses in metadata?",
             "name": "virus_scanning",
             "choices": [
                 {

@@ -250,14 +250,14 @@
             "link_id": "0e1a8a6b-abcc-4ed6-b4fb-cbccfdc23ef5"
         },
         "1e0df175-d56d-450d-8bee-7df1dc7ae815": {
-            "description": {
-                "en": "Approve",
-                "es": "Aprobar",
-                "fr": "Approuver",
-                "ja": "承認",
-                "pt_BR": "Confirmar",
-                "sv": "Godkänn",
-                "no": "Godkjenn"
+           "description": {
+                "en": "Yes",
+                "es": "Sí",
+                "fr": "Oui",
+                "ja": "はい",
+                "pt_BR": "Sim",
+                "sv": "Ja",
+                "no": "Ja"
             },
             "link_id": "0f0c1f33-29f2-49ae-b413-3e043da5df61"
         },
@@ -662,12 +662,13 @@
         },
         "9efab23c-31dc-4cbd-a39d-bb1665460cbe": {
             "description": {
-                "en": "Store AIP",
-                "fr": "Stocker l’AIP",
-                "ja": "AIPを蓄える",
-                "pt_BR": "Armazenar AIP",
-                "sv": "Lagra AIP",
-                "no": "Lagre AIP"
+                "en": "Yes",
+                "es": "Sí",
+                "fr": "Oui",
+                "ja": "はい",
+                "pt_BR": "Sim",
+                "sv": "Ja",
+                "no": "Ja"
             },
             "link_id": "49cbcc4d-067b-4cd5-b52e-faf50857b35a"
         },
@@ -5975,12 +5976,13 @@
                 ]
             },
             "description": {
-                "en": "Store DIP?",
-                "es": "¿Almacenar DIP?",
-                "fr": "Stocker le DIP?",
-                "pt_BR": "Armazenar DIP?",
-                "sv": "Lagra DIP?",
-                "no": "Lagre DIP?"
+                "en": "Yes",
+                "es": "Sí",
+                "fr": "Oui",
+                "ja": "はい",
+                "pt_BR": "Sim",
+                "sv": "Ja",
+                "no": "Ja"
             },
             "exit_codes": {},
             "fallback_job_status": "Failed",
@@ -7417,7 +7419,7 @@
                 "stdout_file": null
             },
             "description": {
-                "en": "Scan for viruses on extracted files",
+                "en": "Scan for viruses in extracted files",
                 "pt_BR": "Procurar vírus nos arquivos extraídos",
                 "sv": "Sök efter virus bland extraherade filer",
                 "no": "Søk etter virus blant uthentede filer"
@@ -8013,7 +8015,7 @@
                 ]
             },
             "description": {
-                "en": "Do you want to scan for viruses?"
+                "en": "Do you want to scan for viruses in metadata?"
             },
             "exit_codes": {},
             "fallback_job_status": "Failed",
