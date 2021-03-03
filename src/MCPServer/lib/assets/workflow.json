@@ -10652,7 +10652,7 @@
                 "no": "Pakk ut pakker"
             }
         },
-        "97a5ddc0-d4e0-43ac-a571-9722405a0a9b": {
+        "3c445ba0-7cf1-414d-a93c-a7292e2aff41": {
             "config": {
                 "@manager": "linkTaskManagerChoice",
                 "@model": "MicroServiceChainChoice",
