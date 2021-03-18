@@ -51,6 +51,13 @@ from main.models import (
     FPCommandOutput,
     SIP,
     SIPArrange,
+    Transfer
+)
+
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.abspath(os.path.join(THIS_DIR, "../lib/clientScripts")))
+sys.path.append(
+    os.path.abspath(os.path.join(THIS_DIR, "../../archivematicaCommon/lib"))
 )
 
 import archivematicaCreateMETSReingest
@@ -713,6 +720,51 @@ def createDigiprovMD(fileUUID, state):
         digiprovMD = etree.Element(
             ns.metsBNS + "digiprovMD",
             ID="digiprovMD_" + str(state.globalDigiprovMDCounter),
+        )
+        ret.append(digiprovMD)
+
+        mdWrap = etree.SubElement(
+            digiprovMD, ns.metsBNS + "mdWrap", MDTYPE="PREMIS:AGENT"
+        )
+        xmlData = etree.SubElement(mdWrap, ns.metsBNS + "xmlData")
+        xmlData.append(createAgent(agent))
+
+    return ret
+
+
+def create_digiprovMD_from_package(sip):
+    """
+       Get all events from a file in package(sip)
+       """
+    # events = Event.objects.get(file_uuid=file_obj.uuid)
+    ret = []
+    event_list = []
+    global_digiprovMD_counter = 0
+    for event in Event.objects.filter(file_uuid__sip__uuid=sip.uuid).iterator():
+        event_list.append(event)
+
+    for event_record in event_list:
+        global_digiprovMD_counter += 1
+        digiprovMD = etree.Element(
+            ns.metsBNS + "digiprovMD",
+            ID="digiprovMD_" + str(global_digiprovMD_counter),
+        )
+        ret.append(digiprovMD)
+
+        mdWrap = etree.SubElement(
+            digiprovMD, ns.metsBNS + "mdWrap", MDTYPE="PREMIS:EVENT"
+        )
+        xmlData = etree.SubElement(mdWrap, ns.metsBNS + "xmlData")
+        xmlData.append(createEvent(event_record))
+
+    print(etree.tostring(ret[0]))
+
+    agents = Agent.objects.filter(event__sip__uuuid=event.agents).distinct()
+    for agent in agents:
+        global_digiprovMD_counter += 1
+        digiprovMD = etree.Element(
+            ns.metsBNS + "digiprovMD",
+            ID = "digiprovMD_" + str(global_digiprovMD_counter),
         )
         ret.append(digiprovMD)
 
@@ -1668,6 +1720,7 @@ def call(jobs):
                 createNormativeStructmap = opts.createNormativeStructmap
                 keepNormativeStructmap = createNormativeStructmap
 
+
                 # If reingesting, do not create a new METS, just modify existing one
                 if "REIN" in SIP_TYPE:
                     job.pyprint("Updating METS during reingest")
@@ -1865,3 +1918,5 @@ def call(jobs):
                 job.print_error(repr(err))
                 job.print_error(traceback.format_exc())
                 job.set_status(1)
+
+
