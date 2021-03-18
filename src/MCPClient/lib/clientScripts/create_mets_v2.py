@@ -53,6 +53,7 @@ from main.models import (
     SIPArrange,
 )
 
+from md_writer import create_md_object
 import archivematicaCreateMETSReingest
 from archivematicaCreateMETSMetadataCSV import parseMetadata
 from archivematicaCreateMETSRights import archivematicaGetRights
