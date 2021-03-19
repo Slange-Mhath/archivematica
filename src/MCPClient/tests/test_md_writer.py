@@ -6,10 +6,13 @@ import uuid
 import pytest
 from lxml import etree
 import namespaces as ns
-
+from pprint import pprint
+import create_mets_v2
+import json
 import metsrw
 from metsrw.plugins.premisrw import PREMIS_3_0_NAMESPACES
 
+from job import Job
 from fpr.models import FPRule
 from main.models import (
     Agent,
@@ -28,7 +31,10 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.abspath(os.path.join(THIS_DIR, "../lib/clientScripts")))
 
 from create_mets_v2 import createDMDIDsFromCSVMetadata
-from md_writer import create_md_object
+from md_writer import get_file_obj_as_json
+from md_writer import get_event_obj_as_json
+from md_writer import get_agents_obj_as_json
+from md_writer import get_job_obj_as_json
 from create_mets_v2 import createEvent
 
 
@@ -39,6 +45,12 @@ def subdir_path(tmp_path):
 
     return subdir
 
+
+
+@pytest.fixture()
+def state():
+    state = create_mets_v2.MetsState()
+    return state
 
 @pytest.fixture()
 def sip(db):
@@ -58,9 +70,12 @@ def empty_subdir_path(tmp_path):
 
 @pytest.fixture()
 def transfer(db):
-    return Transfer.objects.create(
-        uuid=uuid.uuid4(), currentlocation=r"%transferDirectory%", description= "nicer Transfer"
+    transfer = Transfer.objects.create(
+        uuid="eee15993-af4b-484c-992f-c5b3edebd127",
+        currentlocation=r"%transferDirectory%",
+        description= "nicer Transfer",
     )
+    return transfer
 
 
 @pytest.fixture()
@@ -80,7 +95,7 @@ def file_path2(subdir_path):
 
 
 @pytest.fixture()
-def file_obj(db, transfer, tmp_path, file_path, sip):
+def file_obj(db, state, transfer, tmp_path, file_path, sip):
     file_obj_path = "".join(
         [transfer.currentlocation, str(file_path.relative_to(tmp_path))]
     )
@@ -94,6 +109,7 @@ def file_obj(db, transfer, tmp_path, file_path, sip):
         checksum="35e0cc683d75704fc5b04fc3633f6c654e10cd3af57471271f370309c7ff9dba",
         checksumtype="sha256",
         sip=sip,
+        label="my_crazy_filo"
     )
     file_obj.identifiers.create(type="TEST FILE", value="12345")
 
@@ -152,11 +168,42 @@ def event2(request, db, file_obj):
     return event
 
 
-def test_create_md_object(file_obj):
+# @pytest.fixture()
+# def job(db, sip):
+#     job = Job.object.create(
+#         uuid="0b2c7f3c-c73a-4e7d-8334-c547062face8",
+#         type="Virus scan",
+#     )
+#     return job
+
+
+def test_get_file_obj_as_json(file_obj):
     """
     assert that the create_digiprovMD function returns digiprovMD data
     """
     file_list = None
-    file_list = create_md_object(file_obj)
-    print(file_list)
+    file_list = get_file_obj_as_json(file_obj.uuid)
+    for f in file_list:
+        pprint(f)
     assert file_list is not None
+
+
+def test_get_event_obj_as_json(event):
+    event_list = get_event_obj_as_json(event)
+    for e in event_list:
+        print(e)
+    assert event_list is not None
+
+
+def test_get_agents_obj_as_json(file_obj, event):
+    agents_list = get_agents_obj_as_json(file_obj.uuid)
+    for a in agents_list:
+        print(a)
+    assert agents_list is not None
+
+#
+# def test_get_job_obj_as_json(job):
+#     jobs_list = get_job_obj_as_json(job.uuid)
+#     for j in jobs_list:
+#         print(j)
+#     assert jobs_list is not None
