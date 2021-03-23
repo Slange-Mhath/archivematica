@@ -80,6 +80,8 @@ from sanitize_names import sanitize_name
 
 from bagit import Bag, BagError
 
+from md_writer import get_file_obj_as_json
+
 
 class ErrorAccumulator(object):
     def __init__(self):
@@ -1611,6 +1613,15 @@ def add_normative_structmap_div(
         path_to_el[fsitem.path] = el
 
 
+def write_md_file(fileUUID, filepath):
+    json_file = get_file_obj_as_json(fileUUID)
+    # raise Exception(("This is the fileUUID: {}").format(fileUUID))
+    writable_json = ','.join(json_file)
+    filename = filepath + "metadata_output.txt"
+    with open(filename, "w") as f:
+        f.write(writable_json)
+
+
 def call(jobs):
     from optparse import OptionParser
 
@@ -1734,6 +1745,7 @@ def call(jobs):
 
                 # Get the <dmdSec> for the entire AIP; it is associated to the root
                 # <mets:div> in the physical structMap.
+                # TODO: This is the workaround to get the file uuid for the package isn't it?
                 sip_mdl = SIP.objects.filter(uuid=fileGroupIdentifier).first()
                 if sip_mdl:
                     aipDmdSec = getDirDmdSec(sip_mdl, sip_dir_name)
@@ -1860,6 +1872,7 @@ def call(jobs):
 
                 tree = etree.ElementTree(root)
                 write_mets(tree, XMLFile)
+                write_md_file(fileGroupIdentifier, baseDirectoryPath)
 
                 job.set_status(state.error_accumulator.error_count)
             except Exception as err:

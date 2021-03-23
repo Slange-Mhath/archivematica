@@ -36,6 +36,7 @@ from md_writer import get_event_obj_as_json
 from md_writer import get_agents_obj_as_json
 from md_writer import get_job_obj_as_json
 from create_mets_v2 import createEvent
+from create_mets_v2 import write_md_file
 
 
 @pytest.fixture()
@@ -177,12 +178,12 @@ def event2(request, db, file_obj):
 #     return job
 
 
-def test_get_file_obj_as_json(file_obj):
+def test_get_file_obj_as_json(file_obj, sip):
     """
     assert that the create_digiprovMD function returns digiprovMD data
     """
     file_list = None
-    file_list = get_file_obj_as_json(file_obj.uuid)
+    file_list = get_file_obj_as_json(sip.uuid)
     for f in file_list:
         pprint(f)
     assert file_list is not None
@@ -201,9 +202,16 @@ def test_get_agents_obj_as_json(file_obj, event):
         print(a)
     assert agents_list is not None
 
+
+def test_write_md_file(file_obj):
+    empty = write_md_file("Testname", file_obj.uuid)
+    assert empty is not None
+
 #
 # def test_get_job_obj_as_json(job):
 #     jobs_list = get_job_obj_as_json(job.uuid)
 #     for j in jobs_list:
 #         print(j)
 #     assert jobs_list is not None
+
+# TODO: wright stuff inside the tree with the etree API

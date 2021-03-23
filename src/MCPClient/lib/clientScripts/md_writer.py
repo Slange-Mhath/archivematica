@@ -52,9 +52,10 @@ def convert_date_format_values(file_as_dict):
     return file_as_dict
 
 
-def get_file_obj_as_json(file_object_id):
+def get_file_obj_as_json(sip_uuid):
     files_as_json = []
-    for file_object in File.objects.filter(uuid=file_object_id).values():
+    # Get the files that have the sip.uuid xyz
+    for file_object in File.objects.filter(sip=sip_uuid).values():
         # file_object.transfer gives back the transfer object which is related
         # to the file object which means I could use the dot notation to get
         # information of the transfer
@@ -85,8 +86,11 @@ def get_job_obj_as_json(job):
         jobs_as_json.append(job)
     return jobs_as_json
 
+
 # TODO: Return list of files which are modified through a certain event like:
 # The file x was modified through the event y
 # for agent in event_record.agents.all():
 
+# TODO: Maybe think about calling single files and returning single json file objects
+# rather than a list.
 
