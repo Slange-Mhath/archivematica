@@ -24,6 +24,7 @@ from main.models import (
     RightsStatement,
     Transfer,
     SIP,
+    Job
 )
 
 
@@ -31,12 +32,13 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.abspath(os.path.join(THIS_DIR, "../lib/clientScripts")))
 
 from create_mets_v2 import createDMDIDsFromCSVMetadata
-from md_writer import get_file_obj_as_json
-from md_writer import get_event_obj_as_json
-from md_writer import get_agents_obj_as_json
-from md_writer import get_job_obj_as_json
+from md_writer import get_event_objs
+from md_writer import get_agents_objs
+from md_writer import get_files_in_sip
 from create_mets_v2 import createEvent
 from create_mets_v2 import write_md_file
+from md_writer import get_file_size_of_sip
+from md_writer import metadata_writer
 
 
 @pytest.fixture()
@@ -47,11 +49,11 @@ def subdir_path(tmp_path):
     return subdir
 
 
-
 @pytest.fixture()
 def state():
     state = create_mets_v2.MetsState()
     return state
+
 
 @pytest.fixture()
 def sip(db):
@@ -81,7 +83,7 @@ def transfer(db):
 
 @pytest.fixture()
 def file_path(subdir_path):
-    file_path = subdir_path / "file1"
+    file_path = subdir_path / "file"
     file_path.write_text("Hello world")
 
     return file_path
@@ -171,41 +173,55 @@ def event2(request, db, file_obj):
 
 # @pytest.fixture()
 # def job(db, sip):
-#     job = Job.object.create(
+#     job = Job.objects.create(
 #         uuid="0b2c7f3c-c73a-4e7d-8334-c547062face8",
-#         type="Virus scan",
+#         job_type="Virus scan",
 #     )
 #     return job
 
 
-def test_get_file_obj_as_json(file_obj, sip):
-    """
-    assert that the create_digiprovMD function returns digiprovMD data
-    """
-    file_list = None
-    file_list = get_file_obj_as_json(sip.uuid)
-    for f in file_list:
-        pprint(f)
-    assert file_list is not None
+# def test_get_event_obj_as_json(event):
+#     event_list = get_event_obj_as_json(event)
+#     for e in event_list:
+#         print(e)
+#     assert event_list is not None
 
 
-def test_get_event_obj_as_json(event):
-    event_list = get_event_obj_as_json(event)
-    for e in event_list:
-        print(e)
-    assert event_list is not None
-
-
-def test_get_agents_obj_as_json(file_obj, event):
-    agents_list = get_agents_obj_as_json(file_obj.uuid)
-    for a in agents_list:
-        print(a)
-    assert agents_list is not None
+# def test_get_agents_obj_as_json(file_obj, event):
+#     agents_list = get_agents_obj_as_json(file_obj.uuid)
+#     for a in agents_list:
+#         print(a)
+#     assert agents_list is not None
 
 
 def test_write_md_file(file_obj):
     empty = write_md_file("Testname", file_obj.uuid)
     assert empty is not None
+
+
+def test_get_files_in_sip(file_obj, file_obj2, sip):
+    files_in_sip = get_files_in_sip(sip.uuid)
+    assert len(files_in_sip) == 2
+
+
+# def test_get_files_objs_in_json(file_obj, file_obj2, sip):
+#     json_files = get_file_objs_as_json(sip.uuid)
+#     for jf in json_files:
+#         pprint(jf)
+#     assert len(json_files) == 3
+
+
+def test_get_file_size_of_sip(file_obj, file_obj2, sip):
+    file_size = get_file_size_of_sip(sip.uuid)
+    print(file_size)
+    assert file_size > file_obj.size
+
+
+def test_metadata_writer(sip, file_obj, file_obj2, event, event2):
+    infos = metadata_writer(sip.uuid)
+    pprint(infos)
+    assert infos is not None
+
 
 #
 # def test_get_job_obj_as_json(job):
@@ -214,4 +230,3 @@ def test_write_md_file(file_obj):
 #         print(j)
 #     assert jobs_list is not None
 
-# TODO: wright stuff inside the tree with the etree API

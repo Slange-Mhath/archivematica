@@ -51,6 +51,7 @@ from main.models import (
     FPCommandOutput,
     SIP,
     SIPArrange,
+    Job
 )
 
 
@@ -80,7 +81,9 @@ from sanitize_names import sanitize_name
 
 from bagit import Bag, BagError
 
-from md_writer import get_file_obj_as_json
+from md_writer import get_files_in_sip
+from md_writer import get_file_size_of_sip
+from md_writer import metadata_writer
 
 
 class ErrorAccumulator(object):
@@ -1613,13 +1616,12 @@ def add_normative_structmap_div(
         path_to_el[fsitem.path] = el
 
 
-def write_md_file(fileUUID, filepath):
-    json_file = get_file_obj_as_json(fileUUID)
-    # raise Exception(("This is the fileUUID: {}").format(fileUUID))
-    writable_json = ','.join(json_file)
+def write_md_file(sipUUID, filepath):
+    md_list = metadata_writer(sipUUID)
+    #writable_json = ','.join(md_list)
     filename = filepath + "metadata_output.txt"
     with open(filename, "w") as f:
-        f.write(writable_json)
+        f.write(md_list)
 
 
 def call(jobs):
