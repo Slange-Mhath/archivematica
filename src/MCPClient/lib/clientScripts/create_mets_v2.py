@@ -84,6 +84,7 @@ from bagit import Bag, BagError
 from md_writer import get_files_in_sip
 from md_writer import get_file_size_of_sip
 from md_writer import metadata_writer
+from md_writer import get_md_info
 
 
 class ErrorAccumulator(object):
@@ -1617,7 +1618,7 @@ def add_normative_structmap_div(
 
 
 def write_md_file(sipUUID, filepath):
-    md_list = metadata_writer(sipUUID)
+    md_list = get_md_info(sipUUID)
     #writable_json = ','.join(md_list)
     filename = filepath + "metadata_output.txt"
     with open(filename, "w") as f:

@@ -4,7 +4,7 @@ from glob import glob
 from itertools import chain
 import lxml.etree as etree
 import os
-import pprint
+from pprint import pprint
 import re
 import sys
 import traceback
@@ -18,6 +18,10 @@ import scandir
 from django.forms.models import model_to_dict
 
 from job import Job
+
+from itertools import groupby
+from operator import itemgetter
+
 
 django.setup()
 # dashboard
@@ -63,10 +67,7 @@ def get_files_in_sip(sip_uuid):
     """
     files_in_sip = []
     for file_object in File.objects.filter(sip=sip_uuid).values():
-        # files_in_sip.append(convert_date_format_values(file_object))
-        # specifying which information we want from the file
-        print(file_object.get("originallocation"))
-        print(file_object.get("currentlocation"))
+        files_in_sip.append(file_object)
     return files_in_sip
 
 
@@ -159,7 +160,6 @@ def metadata_writer(sip_uuid):
     agents = get_agents_objs(sip_uuid)
     event_list = get_event_objs(sip_uuid)
     sip_file = sip_files[0]
-    amount_of_sips = len(sip_files)
     list_of_files = get_files_in_sip(sip_uuid)
     #sip_size = get_file_size_of_sip(list_of_files)
     #amount_of_files = len(list_of_files)
@@ -169,11 +169,60 @@ def metadata_writer(sip_uuid):
         #"sip_size": sip_size,
         "aip_creation_date": sip_file.get("createdtime").strftime("%m/%d/%Y, %H:%M:%S %z, %Z"),
         "sip_path": sip_file.get("currentpath"),
-        #"number_of_files": amount_of_files,
+        "number_of_files": len(list_of_files),
         "files": list_of_files,
         "events_agents": agents,
-        "events": event_list,
+        #"events": event_list,
         # Cant I use the jobs getting called for jobs in job and save them as a counter?
     }
     metadata_info_json = json.dumps(metadata_info)
+    pprint(metadata_info_json)
     return metadata_info_json
+
+
+def get_md_info(sip_uuid):
+    """
+    Get all files related to the package and return them as dict
+    """
+    sip_files = get_sip_objs(sip_uuid)
+    list_of_files = []
+    """TODO: This has to be optimised. I want to get all the events where the 
+    file_uuid_id is = the uuid of the file_object and add them to the respective
+    file_object events key. 
+    To avoid the for loop inside the for loop its maybe better to pull a list
+    of events through the get_events function and merge the file list and event
+    list to match file_uuid_id of an event with uuid of a file and add the event
+    to the file dict"""
+    md_info = {
+        "Collection name": sip_files[0].get("aip_filename"),
+        "Accession ID": sip_uuid,
+        "AIP creation date": sip_files[0].get("createdtime").strftime(
+            "%m/%d/%Y, %H:%M:%S %z, %Z"),
+    }
+    for file_object in File.objects.filter(sip=sip_uuid).values():
+        file_object_info = {}
+        file_object_info.update(
+            {"Current file path": file_object.get("currentlocation"),
+             "Original file path": file_object.get("originallocation"),
+             "Last modified": file_object.get("modificationtime"),
+             "Checksum Type": file_object.get("checksumtype"),
+             "Checksum": file_object.get("checksum"),
+             "Object ID": file_object.get("uuid"),
+             "File Size": file_object.get("size"), })
+        list_of_files.append(file_object_info)
+        event_list = []
+        for event in Event.objects.filter(
+                file_uuid_id=file_object.get("uuid")).values():
+            if event.get("event_type") == "validation":
+                file_object_info.update(
+                    {"File Format": event.get("event_outcome_detail")})
+            event_info = {}
+            event_info.update({"Event ID": event.get("event_id")})
+            event_list.append(convert_date_format_values(event_info))
+        file_object_info.update({"events": event_list})
+        list_of_files.append(convert_date_format_values(file_object_info))
+    md_info.update({"files": list_of_files})
+    metadata_info_json = json.dumps(md_info)
+    pprint(metadata_info_json)
+    return metadata_info_json
+

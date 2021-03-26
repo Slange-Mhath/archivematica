@@ -39,6 +39,7 @@ from create_mets_v2 import createEvent
 from create_mets_v2 import write_md_file
 from md_writer import get_file_size_of_sip
 from md_writer import metadata_writer
+from md_writer import get_md_info
 
 
 @pytest.fixture()
@@ -56,9 +57,10 @@ def state():
 
 
 @pytest.fixture()
-def sip(db):
+def sip(db, file_path):
     sip = SIP.objects.create(
         uuid="ae8d4290-fe52-4954-b72a-0f591bee2e2f",
+        aip_filename="Thats my APE"
     )
     return sip
 
@@ -199,7 +201,7 @@ def test_write_md_file(file_obj):
     assert empty is not None
 
 
-def test_get_files_in_sip(file_obj, file_obj2, sip):
+def test_get_files_in_sip(file_obj, file_obj2, sip, event, event2):
     files_in_sip = get_files_in_sip(sip.uuid)
     assert len(files_in_sip) == 2
 
@@ -219,10 +221,12 @@ def test_get_file_size_of_sip(file_obj, file_obj2, sip):
 
 def test_metadata_writer(sip, file_obj, file_obj2, event, event2):
     infos = metadata_writer(sip.uuid)
-    pprint(infos)
     assert infos is not None
 
 
+def test_md_info(sip, file_obj, file_obj2, event, event2):
+    infos = get_md_info(sip.uuid)
+    assert infos is not None
 #
 # def test_get_job_obj_as_json(job):
 #     jobs_list = get_job_obj_as_json(job.uuid)
