@@ -3,13 +3,20 @@ from __future__ import absolute_import
 
 from base64 import b64encode
 import json
+import os
 import uuid
+import tempfile
 
 from django.urls import reverse
 from django.test import TestCase
-from django.test.client import Client
+from django.test.client import Client, RequestFactory
 import pytest
 import mock
+
+try:
+    from pathlib import Path
+except ImportError:
+    from pathlib2 import Path
 
 from archivematicaFunctions import b64encode_string
 from components import helpers
@@ -377,6 +384,131 @@ class TestSIPArrange(TestCase):
                     sip_uuid,
                 )
 
+    def test_copy_from_arrange_to_completed_rejects_invalid_sip_uuid(self):
+        response = self.client.post(
+            reverse("filesystem_ajax:copy_from_arrange"),
+            data={
+                "filepath": b64encode(b"/arrange/testsip/").decode("utf8"),
+                "uuid": "invalid-uuid",
+            },
+            follow=True,
+        )
+
+        assert response.status_code == 400
+        assert (
+            response.json()["message"]
+            == "Provided UUID (invalid-uuid) is not a valid UUID!"
+        )
+
+    def test_copy_from_arrange_to_completed_rejects_invalid_filepath(self):
+        response = self.client.post(
+            reverse("filesystem_ajax:copy_from_arrange"),
+            data={
+                "filepath": b64encode(b"/path/testsip/").decode("utf8"),
+                "uuid": "607df760-a0be-4fef-875a-74ea00c61bf9",
+            },
+            follow=True,
+        )
+
+        assert response.status_code == 400
+        assert response.json()["message"] == "/path/testsip/ is not in /arrange/"
+
+    def test_copy_from_arrange_to_completed_rejects_nondir_filepath(self):
+        response = self.client.post(
+            reverse("filesystem_ajax:copy_from_arrange"),
+            data={
+                "filepath": b64encode(b"/arrange/testsip").decode("utf8"),
+                "uuid": "607df760-a0be-4fef-875a-74ea00c61bf9",
+            },
+            follow=True,
+        )
+
+        assert response.status_code == 400
+        assert response.json()["message"] == "/arrange/testsip is not a directory"
+
+    def test_copy_from_arrange_to_completed_rejects_empty_arrangements(self):
+        models.SIP.objects.create(uuid="607df760-a0be-4fef-875a-74ea00c61bf9")
+        models.SIPArrange.objects.all().delete()
+        models.SIPArrange.objects.create(arrange_path="/arrange/testsip/")
+
+        response = self.client.post(
+            reverse("filesystem_ajax:copy_from_arrange"),
+            data={
+                "filepath": b64encode(b"/arrange/testsip/").decode("utf8"),
+                "uuid": "607df760-a0be-4fef-875a-74ea00c61bf9",
+            },
+            follow=True,
+        )
+
+        assert response.status_code == 400
+        assert response.json()["message"] == "No files were selected"
+
+    def test_copy_from_arrange_to_completed_handles_name_clashes(self):
+        """Confirms that SIP arrangement is also possible from BagIt transfers.
+
+        See https://github.com/archivematica/Issues/issues/1267 for a scenario
+        where files in backlogged transfers such as `data/logs/*` would cause
+        the endpoint to fail.
+        """
+        sip_uuid = u"a29e7e86-eca9-43b6-b059-6f23a9802dc8"
+        models.SIPArrange.objects.all().delete()
+        models.SIPArrange.objects.create(arrange_path="/arrange/testsip/")
+        models.SIPArrange.objects.create(arrange_path="/arrange/testsip/data/")
+        models.SIPArrange.objects.create(arrange_path="/arrange/testsip/data/objects/")
+        models.SIPArrange.objects.create(
+            arrange_path="/arrange/testsip/data/objects/MARBLES.TGA",
+            original_path="originals/newsip-a29e7e86-eca9-43b6-b059-6f23a9802dc8/data/objects/MARBLES.TGA",
+            transfer_uuid="a29e7e86-eca9-43b6-b059-6f23a9802dc8",
+        )
+        models.SIPArrange.objects.create(
+            arrange_path="/arrange/testsip/data/logs/BagIt/bagit.txt",
+            original_path="originals/newsip-a29e7e86-eca9-43b6-b059-6f23a9802dc8/data/logs/BagIt/bagit.txt",
+            transfer_uuid="a29e7e86-eca9-43b6-b059-6f23a9802dc8",
+        )
+        models.SIPArrange.objects.create(
+            arrange_path="/arrange/testsip/data/metadata/manifest-md5.txt",
+            original_path="originals/newsip-a29e7e86-eca9-43b6-b059-6f23a9802dc8/data/metadata/manifest-md5.txt",
+            transfer_uuid="a29e7e86-eca9-43b6-b059-6f23a9802dc8",
+        )
+
+        shared_dir = Path(tempfile.mkdtemp())
+        staged_dir = shared_dir / "staging/testsip"
+        (staged_dir / "logs").mkdir(parents=True)
+
+        # Pre-create directory to produce name conflict.
+        dst_dir = (
+            shared_dir / "watchedDirectories/SIPCreation/SIPsUnderConstruction/testsip"
+        )
+        dst_dir.mkdir(parents=True)
+
+        with self.settings(SHARED_DIRECTORY=str(shared_dir)):
+            with mock.patch(
+                "components.filesystem_ajax.views.storage_service.get_files_from_backlog",
+                return_value=("12345", None),
+            ):
+                with mock.patch("shutil.move") as move_mock:
+                    response = self.client.post(
+                        reverse("filesystem_ajax:copy_from_arrange"),
+                        data={
+                            "filepath": b64encode(b"/arrange/testsip/").decode("utf8"),
+                            "uuid": sip_uuid,
+                        },
+                        follow=True,
+                    )
+
+                    assert response.status_code == 201
+                    assert response.json()["sip_uuid"] == sip_uuid
+
+                    # Assert that "_1" suffix is appended.
+                    move_mock.assert_called_once_with(
+                        src=str(staged_dir) + os.sep, dst=str(dst_dir) + "_1"
+                    )
+
+                    assert (
+                        models.SIP.objects.get(uuid=sip_uuid).currentpath
+                        == "%sharedPath%/watchedDirectories/SIPCreation/SIPsUnderConstruction/testsip_1/"
+                    )
+
 
 @pytest.mark.django_db
 def test_copy_metadata_files(mocker):
@@ -415,3 +547,62 @@ def test_copy_metadata_files(mocker):
         ["locationuuid:/some/path"],
         "more/path/metadataReminder/mysip-{}/metadata".format(sip_uuid),
     )
+
+
+@pytest.mark.parametrize(
+    "local_path_exists, preview",
+    [
+        # Verify that transfer file is streamed directly from local
+        # disk if available (e.g. on pipeline local filesystem).
+        (True, True),  # Preview
+        (True, False),  # Download
+        # Verify that transfer file is requested from Storage Service
+        # if not available on local disk (e.g. on Storage Service
+        # local filesystem)
+        (False, True),  # Preview
+        (False, False),  # Download
+    ],
+)
+def test_download_by_uuid(mocker, local_path_exists, preview):
+    """Test that transfer file downloads work as expected."""
+    TEST_UUID = "a29e7e86-eca9-43b6-b059-6f23a9802dc8"
+    TEST_SS_URL = "http://test-url"
+    TEST_BACKLOG_LOCATION_PATH = "/path/to/test/location"
+    TEST_RELPATH = "transfer-{}/data/objects/bird.mp3".format(TEST_UUID)
+    TEST_ABSPATH = os.path.join(TEST_BACKLOG_LOCATION_PATH, "originals", TEST_RELPATH)
+
+    mock_get_file_info = mocker.patch("elasticSearchFunctions.get_transfer_file_info")
+    mock_get_file_info.return_value = {
+        "sipuuid": str(uuid.uuid4()),
+        "relative_path": TEST_RELPATH,
+    }
+    mocker.patch("elasticSearchFunctions.get_client")
+
+    mock_get_location = mocker.patch("storageService.get_first_location")
+    mock_get_location.return_value = {"path": TEST_BACKLOG_LOCATION_PATH}
+
+    mock_exists = mocker.patch("os.path.exists")
+    mock_exists.return_value = local_path_exists
+
+    mock_extract_file_url = mocker.patch("storageService.extract_file_url")
+    mock_extract_file_url.return_value = TEST_SS_URL
+
+    mock_send_file = mocker.patch("components.helpers.send_file")
+    mock_stream_file_from_ss = mocker.patch(
+        "components.helpers.stream_file_from_storage_service"
+    )
+
+    factory = RequestFactory()
+    request = factory.get("/filesystem/{}/download/".format(TEST_UUID))
+
+    views.download_by_uuid(request, TEST_UUID, preview_file=preview)
+
+    if local_path_exists:
+        download = not preview
+        mock_send_file.assert_called_once_with(request, TEST_ABSPATH, download)
+        mock_stream_file_from_ss.assert_not_called()
+    else:
+        mock_send_file.assert_not_called()
+        mock_stream_file_from_ss.assert_called_once_with(
+            TEST_SS_URL, "Storage service returned {}; check logs?", preview
+        )

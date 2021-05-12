@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Archivematica.  If not, see <http://www.gnu.org/licenses/>.
 
-import cPickle
+import six.moves.cPickle
 import getpass
 import optparse
 import os
@@ -110,31 +110,33 @@ def start(job, data):
         # Look for access system ID
         transfers = models.Transfer.objects.filter(file__sip_id=data.uuid).distinct()
         if transfers.count() == 1:
-            access.target = cPickle.dumps({"target": transfers[0].access_system_id})
+            access.target = six.moves.cPickle.dumps(
+                {"target": transfers[0].access_system_id}, protocol=0
+            )
         access.save()
 
     # The target columns contents a serialized Python dictionary
     # - target is the permalink string
     try:
-        target = cPickle.loads(str(access.target))
+        target = six.moves.cPickle.loads(str(access.target))
         log("Target: %s" % (target["target"]))
     except:
         return error(job, "No target was selected")
 
     # Rsync if data.rsync_target option was passed to this script
     if data.rsync_target:
-        """ Build command (rsync)
-          -a =
-            -r = recursive
-            -l = recreate symlinks on destination
-            -p = set same permissions
-            -t = transfer modification times
-            -g = set same group owner on destination
-            -o = set same user owner on destination (if possible, super-user)
-            --devices = transfer character and block device files (only super-user)
-            --specials = transfer special files like sockets and fifos
-          -z = compress
-          -P = --partial + --stats
+        """Build command (rsync)
+        -a =
+          -r = recursive
+          -l = recreate symlinks on destination
+          -p = set same permissions
+          -t = transfer modification times
+          -g = set same group owner on destination
+          -o = set same user owner on destination (if possible, super-user)
+          --devices = transfer character and block device files (only super-user)
+          --specials = transfer special files like sockets and fifos
+        -z = compress
+        -P = --partial + --stats
         """
         # Using rsync -rltzP
         command = [

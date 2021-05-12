@@ -156,8 +156,10 @@ def test_get_pointer_unknown_pointer(
     client, mocker, django_user_model, username, password
 ):
     sip_uuid = "33333333-3333-3333-3333-333333333331"
-    pointer_url = "http://archivematica-storage-service:8000/api/v2/file/{}/pointer_file".format(
-        sip_uuid
+    pointer_url = (
+        "http://archivematica-storage-service:8000/api/v2/file/{}/pointer_file".format(
+            sip_uuid
+        )
     )
     dashboard_login_and_setup(client, django_user_model, username, password)
     mocker.patch("elasticSearchFunctions.get_client")
@@ -181,8 +183,10 @@ def test_get_pointer_known_pointer(
     client, mocker, django_user_model, username, password, mets_hdr
 ):
     sip_uuid = "44444444-4444-4444-4444-444444444444"
-    pointer_url = "http://archivematica-storage-service:8000/api/v2/file/{}/pointer_file".format(
-        sip_uuid
+    pointer_url = (
+        "http://archivematica-storage-service:8000/api/v2/file/{}/pointer_file".format(
+            sip_uuid
+        )
     )
     pointer_file = "pointer.{}.xml".format(sip_uuid)
     content_disposition = 'attachment; filename="{}"'.format(pointer_file)
@@ -284,7 +288,7 @@ def test_search_as_csv(client, mocker, django_user_model, username, password, tm
     assert response.get("content-disposition") == RESULT_DISPOSITION
 
     streamed_content = b"".join([content for content in response.streaming_content])
-    csv_file = StringIO(streamed_content)
+    csv_file = StringIO(streamed_content.decode("utf8"))
     data_frame = pd.read_csv(csv_file, header=0, encoding="utf8")
 
     # Make sure that our headers come out as expected and in the right order.

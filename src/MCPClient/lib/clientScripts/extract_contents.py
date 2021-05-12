@@ -59,7 +59,7 @@ def assign_uuid(
     # Correct the information in the path strings sent to this function. First
     # remove the SIP directory from the string. Second, make sure that file
     # paths have not been modified for processing purpose, i.e. in
-    # Archivematica current terminology, sanitized.
+    # Archivematica current terminology, filename change.
     relative_path = filename.replace(sip_directory, TRANSFER_DIRECTORY, 1)
     relative_package_path = package_filename.replace(
         sip_directory, TRANSFER_DIRECTORY, 1
@@ -256,8 +256,7 @@ def main(job, transfer_uuid, sip_directory, date, task_uuid, delete=False):
 def create_extracted_dir_uuids(
     job, transfer_mdl, extraction_target, sip_directory, file_
 ):
-    """Assign UUIDs to directories via ``Directory`` objects in the database.
-    """
+    """Assign UUIDs to directories via ``Directory`` objects in the database."""
     Directory.create_many(
         dir_paths_uuids=_get_subdir_paths(
             job=job,

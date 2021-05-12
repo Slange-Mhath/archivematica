@@ -395,7 +395,8 @@ def _create_arranged_sip(staging_sip_path, files, sip_uuid):
         sip = models.SIP.objects.get(uuid=sip_uuid)
     except models.SIP.DoesNotExist:
         # Create a SIP object if none exists
-        databaseFunctions.createSIP(currentpath, sip_uuid, diruuids=diruuids)
+        path = os.path.join(sip_path.replace(shared_dir, "%sharedPath%", 1), "")
+        databaseFunctions.createSIP(path, sip_uuid, diruuids=diruuids)
         sip = models.SIP.objects.get(uuid=sip_uuid)
     else:
         # Update the already-created SIP with its path
@@ -506,7 +507,8 @@ def copy_from_arrange_to_completed_common(filepath, sip_uuid, sip_name):
                 % {"uuid": sip_uuid},
                 "error": True,
             }
-            return helpers.json_response(response, status_code=400)
+            status_code = 400
+            return status_code, response
 
     # Error checking
     if not filepath.startswith(DEFAULT_ARRANGE_PATH):
@@ -568,6 +570,15 @@ def copy_from_arrange_to_completed_common(filepath, sip_uuid, sip_name):
                 }
                 if file_ not in files:
                     files.append(file_)
+
+        if not files:
+            status_code = 400
+            response = {
+                "message": _("No files were selected"),
+                "code": "ERR_NO_FILES",
+                "error": True,
+            }
+            return status_code, response
 
         logger.debug("copy_from_arrange_to_completed: files: %s", files)
         # Move files from backlog to local staging path
@@ -678,7 +689,7 @@ def _move_files_within_arrange(sourcepath, destination):
 
 
 def _get_arrange_directory_tree(backlog_uuid, original_path, arrange_path):
-    """ Fetches all the children of original_path from backlog_uuid and creates
+    """Fetches all the children of original_path from backlog_uuid and creates
     an identical tree in arrange_path.
 
     Helper function for copy_to_arrange.
@@ -976,7 +987,7 @@ def _copy_from_transfer_sources(paths, relative_destination):
     """
     processing_location = storage_service.get_first_location(purpose="CP")
     transfer_sources = storage_service.get_location(purpose="TS")
-    files = {l["uuid"]: {"location": l, "files": []} for l in transfer_sources}
+    files = {ts["uuid"]: {"location": ts, "files": []} for ts in transfer_sources}
 
     for p in paths:
         try:
@@ -1079,19 +1090,24 @@ def preview_by_uuid(request, uuid):
 
 
 def download_by_uuid(request, uuid, preview_file=False):
-    """Download a file from the Storage Service, given its UUID.
+    """Download a transfer file, given its UUID.
 
-    This view will stream the response directly from the storage service,
-    so, unlike download_ss, this will work even if the Storage Service is
-    not accessible to the requestor.
+    If the file is available on the pipeline local filesystem, this view will
+    stream it directly from disk. In setups with a remote Storage Service, this
+    prevents needing to rsync the entire transfer to the Storage Service and
+    unpack it to stream a single file.
+
+    If the requested file is not available on disk, this view will stream it
+    directly from the Storage Service. Unlike download_ss, this will work even
+    if the Storage Service is not accessible to the requestor.
 
     It looks up the full relative path in the ``transferfiles`` search index.
     ``relative_path`` includes the ``data`` directory when the transfer package
     uses the BagIt format.
 
     Returns 404 if a file with the requested UUID cannot be found. Otherwise
-    the status code is returned via the call to
-    ``stream_file_from_storage_service``
+    the status code is returned via the call to ``send_file`` or
+    ``stream_file_from_storage_service`` as appropriate.
 
     ``preview_file`` is an instruction to be applied to the response headers
     to enable the file to be seen inside the browser if it is capable of being
@@ -1120,6 +1136,18 @@ def download_by_uuid(request, uuid, preview_file=False):
         logger.debug("Search document is missing required parameters")
         return not_found_err
 
+    try:
+        backlog = storage_service.get_first_location(purpose="BL")
+    except storage_service.ResourceNotFound:
+        logger.debug("No backlog location associated with this pipeline")
+        return not_found_err
+
+    file_abspath = os.path.join(backlog["path"], "originals", relpath)
+    if os.path.exists(file_abspath):
+        download_file = not preview_file
+        return helpers.send_file(request, file_abspath, download_file)
+
+    # Prepare relative path in format expected by Storage Service API.
     # E.g. from "<name>-<uuid>/data/objects/bird.mp3" we only need the path
     # component not including transfer name or UUID.
     try:

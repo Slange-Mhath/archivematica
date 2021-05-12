@@ -54,8 +54,7 @@ def test_watched_dir_handler_creates_transfer_if_it_does_not_exist(mocker, tmpdi
 
 @pytest.mark.django_db(transaction=True)
 def test_watched_dir_handler_creates_transfer_for_file(mocker, tmpdir):
-    """Test that a models.Transfer object exists for a file path.
-    """
+    """Test that a models.Transfer object exists for a file path."""
     # We're not interested in the package queue or the link chaining logics here,
     # so we mock very limited implementations for those.
     job_chain_mock = mocker.MagicMock()
@@ -97,7 +96,7 @@ def test_mcp_main(mocker, settings):
     settings.WORKER_THREADS = 1
     settings.PROMETHEUS_ENABLED = True
 
-    mock_load_default_workflow = mocker.patch("server.mcp.load_default_workflow")
+    mock_load_workflow = mocker.patch("server.mcp.load_workflow")
     mock_shared_dirs = mocker.patch("server.mcp.shared_dirs")
     mock_job = mocker.patch("server.mcp.Job")
     mock_task = mocker.patch("server.mcp.Task")
@@ -108,7 +107,7 @@ def test_mcp_main(mocker, settings):
 
     main(shutdown_event=shutdown_event)
 
-    mock_load_default_workflow.assert_called_once()
+    mock_load_workflow.assert_called_once()
     mock_shared_dirs.create.assert_called_once()
     mock_job.cleanup_old_db_entries.assert_called_once()
     mock_task.cleanup_old_db_entries.assert_called_once()

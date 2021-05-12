@@ -13,8 +13,10 @@ from main import models
 
 from job import Job
 from namespaces import NSMAP, nsmap_for_premis2
+from version import get_preservation_system_identifier
 
 import metsrw
+from six.moves import range
 
 try:
     from pathlib import Path
@@ -40,11 +42,7 @@ class TestUpdateObject(TestCase):
 
     def load_fixture(self, fixture_paths):
         try:
-            call_command(
-                "loaddata",
-                *fixture_paths,
-                **{"verbosity": 0, "commit": False, "skip_checks": True}
-            )
+            call_command("loaddata", *fixture_paths, **{"verbosity": 0})
         except Exception:
             self._fixture_teardown()
             raise
@@ -561,7 +559,7 @@ class TestUpdateObject(TestCase):
 class TestUpdateDublinCore(TestCase):
     """ Test updating SIP-level DublinCore. (update_dublincore) """
 
-    fixture_files = ["dublincore.json"]
+    fixture_files = ["metadata_applies_to_type.json", "dublincore.json"]
     fixtures = [os.path.join(FIXTURES_DIR, p) for p in fixture_files]
 
     sip_uuid_none = "dnedne7c-5bd2-4249-84a1-2f00f725b981"
@@ -924,7 +922,7 @@ class TestUpdateDublinCore(TestCase):
 class TestUpdateRights(TestCase):
     """ Test updating PREMIS:RIGHTS. (update_rights and add_rights_elements) """
 
-    fixture_files = ["rights.json"]
+    fixture_files = ["metadata_applies_to_type.json", "rights.json"]
     fixtures = [os.path.join(FIXTURES_DIR, p) for p in fixture_files]
 
     sip_uuid_none = "dnedne7c-5bd2-4249-84a1-2f00f725b981"
@@ -1334,7 +1332,7 @@ class TestAddEvents(TestCase):
             len(
                 root.findall('.//mets:mdWrap[@MDTYPE="PREMIS:AGENT"]', namespaces=NSMAP)
             )
-            == 9
+            == 12
         )
 
     def test_agent_not_in_mets(self):
@@ -1399,7 +1397,8 @@ class TestAddEvents(TestCase):
         )
         assert (
             root.xpath(
-                'mets:amdSec[@ID="amdSec_1"]//premis:agentIdentifierValue[text()="Archivematica-1.4.0"]',
+                'mets:amdSec[@ID="amdSec_1"]//premis:agentIdentifierValue[text()="%s"]'
+                % get_preservation_system_identifier(),
                 namespaces=NSMAP,
             )
             != []
@@ -1449,7 +1448,8 @@ class TestAddEvents(TestCase):
         )
         assert (
             root.xpath(
-                'mets:amdSec[@ID="amdSec_2"]//premis:agentIdentifierValue[text()="Archivematica-1.4.0"]',
+                'mets:amdSec[@ID="amdSec_2"]//premis:agentIdentifierValue[text()="%s"]'
+                % get_preservation_system_identifier(),
                 namespaces=NSMAP,
             )
             != []
@@ -1478,7 +1478,8 @@ class TestAddEvents(TestCase):
         )
         assert (
             root.xpath(
-                'mets:amdSec[@ID="amdSec_3"]//premis:agentIdentifierValue[text()="Archivematica-1.4.0"]',
+                'mets:amdSec[@ID="amdSec_3"]//premis:agentIdentifierValue[text()="%s"]'
+                % get_preservation_system_identifier(),
                 namespaces=NSMAP,
             )
             != []
@@ -1867,7 +1868,8 @@ class TestAddingNewFiles(TestCase):
         # Agents
         assert (
             amdsec.xpath(
-                './/premis:agentIdentifierValue[text()="Archivematica-1.4.0"]',
+                './/premis:agentIdentifierValue[text()="%s"]'
+                % get_preservation_system_identifier(),
                 namespaces=NSMAP,
             )
             != []

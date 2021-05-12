@@ -32,7 +32,7 @@ from main.models import File
 import namespaces as ns
 
 
-def getTrimDmdSec(job, baseDirectoryPath, fileGroupIdentifier):
+def getTrimDmdSec(job, baseDirectoryPath, sipUUID):
     # containerMetadata
     ret = etree.Element(ns.metsBNS + "dmdSec")
     mdWrap = etree.SubElement(ret, ns.metsBNS + "mdWrap")
@@ -54,9 +54,11 @@ def getTrimDmdSec(job, baseDirectoryPath, fileGroupIdentifier):
     etree.SubElement(dublincore, ns.dctermsBNS + "title").text = root.find(
         "Container/TitleFreeTextPart"
     ).text
-    etree.SubElement(dublincore, ns.dctermsBNS + "provenance").text = (
-        "Department: %s; OPR: %s"
-        % (root.find("Container/Department").text, root.find("Container/OPR").text)
+    etree.SubElement(
+        dublincore, ns.dctermsBNS + "provenance"
+    ).text = "Department: %s; OPR: %s" % (
+        root.find("Container/Department").text,
+        root.find("Container/OPR").text,
     )
     etree.SubElement(dublincore, ns.dctermsBNS + "isPartOf").text = root.find(
         "Container/FullClassificationNumber"
@@ -67,15 +69,15 @@ def getTrimDmdSec(job, baseDirectoryPath, fileGroupIdentifier):
 
     # get objects count
     files = File.objects.filter(
-        removedtime__isnull=True, sip_id=fileGroupIdentifier, filegrpuse="original"
+        removedtime__isnull=True, sip_id=sipUUID, filegrpuse="original"
     )
     etree.SubElement(
         dublincore, ns.dctermsBNS + "extent"
-    ).text = "%d digital objects".format(files.count())
+    ).text = "{} digital objects".format(files.count())
 
     files = File.objects.filter(
         removedtime__isnull=True,
-        sip_id=fileGroupIdentifier,
+        sip_id=sipUUID,
         filegrpuse="TRIM file metadata",
     )
 
@@ -103,7 +105,7 @@ def getTrimDmdSec(job, baseDirectoryPath, fileGroupIdentifier):
     return ret
 
 
-def getTrimFileDmdSec(job, baseDirectoryPath, fileGroupIdentifier, fileUUID):
+def getTrimFileDmdSec(job, baseDirectoryPath, sipUUID, fileUUID):
     ret = etree.Element(ns.metsBNS + "dmdSec")
     mdWrap = etree.SubElement(ret, ns.metsBNS + "mdWrap")
     mdWrap.set("MDTYPE", "DC")
@@ -112,7 +114,7 @@ def getTrimFileDmdSec(job, baseDirectoryPath, fileGroupIdentifier, fileUUID):
     try:
         f = File.objects.get(
             removedtime__isnull=True,
-            sip_id=fileGroupIdentifier,
+            sip_id=sipUUID,
             filegrpuuid=fileUUID,
             filegrpuse="TRIM file metadata",
         )
@@ -143,13 +145,13 @@ def getTrimFileDmdSec(job, baseDirectoryPath, fileGroupIdentifier, fileUUID):
     return ret
 
 
-def getTrimFileAmdSec(job, baseDirectoryPath, fileGroupIdentifier, fileUUID):
+def getTrimFileAmdSec(job, baseDirectoryPath, sipUUID, fileUUID):
     ret = etree.Element(ns.metsBNS + "digiprovMD")
 
     try:
         f = File.objects.get(
             removedtime__isnull=True,
-            sip_id=fileGroupIdentifier,
+            sip_id=sipUUID,
             filegrpuuid=fileUUID,
             filegrpuse="TRIM file metadata",
         )
@@ -170,12 +172,12 @@ def getTrimFileAmdSec(job, baseDirectoryPath, fileGroupIdentifier, fileUUID):
     return ret
 
 
-def getTrimAmdSec(job, baseDirectoryPath, fileGroupIdentifier):
+def getTrimAmdSec(job, baseDirectoryPath, sipUUID):
     ret = etree.Element(ns.metsBNS + "digiprovMD")
 
     files = File.objects.filter(
         removedtime__isnull=True,
-        sip_id=fileGroupIdentifier,
+        sip_id=sipUUID,
         filegrpuse="TRIM container metadata",
     )
     for f in files:

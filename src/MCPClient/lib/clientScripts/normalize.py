@@ -79,21 +79,21 @@ def get_replacement_dict(job, opts):
 
 
 def check_manual_normalization(job, opts):
-    """ Checks for manually normalized file, returns that path or None.
+    """Checks for manually normalized file, returns that path or None.
 
     Checks by looking for access/preservation files for a give original file.
 
     Check the manualNormalization/access and manualNormalization/preservation
     directories for access and preservation files.  If a nomalization.csv
     file is specified, check there first for the mapping between original
-    file and access/preservation file. """
+    file and access/preservation file."""
 
     # If normalization.csv provided, check there for mapping from original
     # to access/preservation file
     normalization_csv = os.path.join(
         opts.sip_path, "objects", "manualNormalization", "normalization.csv"
     )
-    # Get original name of target file, to handle sanitized names
+    # Get original name of target file, to handle filename changes.
     file_ = File.objects.get(uuid=opts.file_uuid)
     bname = file_.originallocation.replace(
         "%transferDirectory%objects/", "", 1
@@ -136,7 +136,7 @@ def check_manual_normalization(job, opts):
                 return None
 
             # If we found a match, verify access/preservation exists in DB
-            # match and pull original location b/c sanitization
+            # match and pull original location b/c filename changes
             if "preservation" in opts.purpose:
                 filename = preservation_file
             elif "access" in opts.purpose:
@@ -195,7 +195,7 @@ def check_manual_normalization(job, opts):
 
 
 def once_normalized(job, command, opts, replacement_dict):
-    """ Updates the database if normalization completed successfully.
+    """Updates the database if normalization completed successfully.
 
     Callback from transcoder.Command
 

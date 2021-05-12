@@ -8,10 +8,10 @@ import logging
 import uuid
 
 from django.conf import settings
-from django.utils import six
 from django.utils.six.moves import cPickle
 from gearman import GearmanClient
 from gearman.constants import JOB_COMPLETE, JOB_FAILED, JOB_UNKNOWN
+import six
 
 from server import metrics
 from server.tasks.task import Task
@@ -35,8 +35,7 @@ class MCPGearmanClient(GearmanClient):
         """
 
         def continue_while_no_job_completed(any_activity):
-            """Returns False (exiting the poll loop) if anything was completed.
-            """
+            """Returns False (exiting the poll loop) if anything was completed."""
             for current_request in job_requests:
                 if current_request.complete and current_request.state != JOB_UNKNOWN:
                     return False
@@ -168,8 +167,7 @@ class GearmanTaskBackend(TaskBackend):
 
 
 class GearmanTaskBatch(object):
-    """A collection of `Task` objects, to be submitted as one gearman job.
-    """
+    """A collection of `Task` objects, to be submitted as one gearman job."""
 
     def __init__(self):
         self.uuid = uuid.uuid4()
@@ -191,7 +189,7 @@ class GearmanTaskBatch(object):
     def serialize_task(self, task):
         return {
             "uuid": six.text_type(task.uuid),
-            "createdDate": task.start_timestamp.isoformat(b" "),
+            "createdDate": task.start_timestamp.isoformat(str(" ")),
             "arguments": task.arguments,
             "wants_output": task.wants_output,
         }
@@ -208,12 +206,12 @@ class GearmanTaskBatch(object):
             task_uuid = six.text_type(task.uuid)
             data["tasks"][task_uuid] = self.serialize_task(task)
 
-        pickled_data = cPickle.dumps(data)
+        pickled_data = cPickle.dumps(data, protocol=0)
 
         self.pending = client.submit_job(
-            task=six.binary_type(job.name),
+            task=six.ensure_binary(job.name),
             data=pickled_data,
-            unique=six.binary_type(self.uuid),
+            unique=six.ensure_binary(six.text_type(self.uuid)),
             wait_until_complete=False,
             background=False,
             max_retries=0,

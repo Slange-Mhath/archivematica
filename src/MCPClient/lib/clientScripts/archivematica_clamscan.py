@@ -27,6 +27,7 @@ import uuid
 import errno
 
 import django
+import six
 
 django.setup()
 from django.db import transaction
@@ -73,9 +74,7 @@ def clamav_version_parts(ver):
     return None, None
 
 
-class ScannerBase(object):
-    __metaclass__ = abc.ABCMeta
-
+class ScannerBase(six.with_metaclass(abc.ABCMeta, object)):
     @abc.abstractmethod
     def scan(self, path):
         """Scan a file and return a tuple of three elements reporting the
@@ -132,7 +131,7 @@ class ClamdScanner(ScannerBase):
 
     @staticmethod
     def clamd_exception_handler(err):
-        """ Manage each decision for an exception when it is raised. Ensure
+        """Manage each decision for an exception when it is raised. Ensure
         that each decision can be tested to meet the documented Archivematica
         antivirus feature definition.
         """
@@ -272,7 +271,7 @@ DEFAULT_SCANNER = ClamdScanner
 
 
 def get_scanner():
-    """ Return the ClamAV client configured by the user and found in the
+    """Return the ClamAV client configured by the user and found in the
     installation's environment variables. Clamdscanner may perform quicker
     than Clamscanner given a larger number of objects. Return clamdscanner
     object as a default if no other, or an incorrect value is specified.

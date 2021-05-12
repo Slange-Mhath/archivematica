@@ -7,11 +7,11 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import functools
 import logging
-import Queue
 import threading
 
 from django.conf import settings
 from django.utils import six
+from six.moves import queue as Queue
 
 from server import metrics
 from server.jobs import DecisionJob
@@ -192,8 +192,7 @@ class PackageQueue(object):
         return result
 
     def stop(self):
-        """Trigger queue shutdown.
-        """
+        """Trigger queue shutdown."""
         self.shutdown_event.set()
 
     def _package_completed_callback(self, package, link_id, future):
@@ -274,8 +273,7 @@ class PackageQueue(object):
         return job
 
     def activate_package(self, package):
-        """Mark a package as active, allowing jobs related to it to process.
-        """
+        """Mark a package as active, allowing jobs related to it to process."""
         with self.active_package_lock:
             if package.uuid not in self.active_packages:
                 self.active_packages[package.uuid] = package
@@ -288,8 +286,7 @@ class PackageQueue(object):
                 )
 
     def deactivate_package(self, package):
-        """Mark a package as inactive.
-        """
+        """Mark a package as inactive."""
         with self.active_package_lock:
             if package.uuid in self.active_packages:
                 del self.active_packages[package.uuid]
@@ -332,8 +329,7 @@ class PackageQueue(object):
             )
 
     def await_decision(self, job):
-        """Mark a job as awaiting user input to proceed.
-        """
+        """Mark a job as awaiting user input to proceed."""
         job_id = six.text_type(job.uuid)
         with self.waiting_choices_lock:
             self.waiting_choices[job_id] = job
@@ -344,14 +340,12 @@ class PackageQueue(object):
             logger.debug("Marked job %s as awaiting a decision", job.uuid)
 
     def jobs_awaiting_decisions(self):
-        """Returns all jobs waiting for input.
-        """
+        """Returns all jobs waiting for input."""
         with self.waiting_choices_lock:
             return self.waiting_choices.copy()
 
     def decide(self, job_uuid, choice, user_id=None):
-        """Make a decision on a job waiting for user input.
-        """
+        """Make a decision on a job waiting for user input."""
         job_uuid = six.text_type(job_uuid)
 
         with self.waiting_choices_lock:

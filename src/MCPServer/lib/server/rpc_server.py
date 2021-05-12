@@ -11,7 +11,6 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from collections import OrderedDict
 
 import calendar
-import cPickle
 import inspect
 import logging
 from socket import gethostname
@@ -25,7 +24,7 @@ from django.utils.six.moves import configparser
 from gearman import GearmanWorker
 import gearman
 from lxml import etree
-
+from six.moves import cPickle
 
 from archivematicaFunctions import strToUnicode
 from main.models import Job, SIP, Transfer
@@ -120,8 +119,7 @@ class RPCServer(GearmanWorker):
         self.set_client_id(client_id)
 
     def after_poll(self, any_activity):
-        """Stop the work loop if the shutdown event is set.
-        """
+        """Stop the work loop if the shutdown event is set."""
         if self.shutdown_event.is_set():
             return False
 
@@ -190,7 +188,7 @@ class RPCServer(GearmanWorker):
                 if opts["raise_exc"]:
                     raise  # So GearmanWorker knows that it failed.
                 resp = {"error": True, "handler": name, "message": str(err)}
-            return cPickle.dumps(resp)
+            return cPickle.dumps(resp, protocol=0)
 
         return wrap
 
@@ -329,14 +327,14 @@ class RPCServer(GearmanWorker):
         if job_chain:
             self.package_queue.schedule_job(next(job_chain))
 
-    def _get_processing_config_fields_handler(self, worker, job):
+    def _get_processing_config_fields_handler(self, worker, job, payload):
         """List processing configuration fields.
 
         [config]
         name = getProcessingConfigFields
         raise_exc = False
         """
-        return get_processing_fields(self.workflow)
+        return get_processing_fields(self.workflow, payload.get("lang"))
 
     def _units_statuses_handler(self, worker, job, payload):
         """Returns the status of units that are of type SIP or Transfer.

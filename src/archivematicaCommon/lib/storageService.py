@@ -162,7 +162,7 @@ def get_pipeline(uuid):
 
 
 def get_location(path=None, purpose=None, space=None):
-    """ Returns a list of storage locations, filtered by parameters.
+    """Returns a list of storage locations, filtered by parameters.
 
     Queries the storage service and returns a list of storage locations,
     optionally filtered by purpose, containing space or path.
@@ -209,7 +209,7 @@ def get_first_location(**kwargs):
         kwargs_string = ", ".join(
             "%s=%r" % (key, value) for (key, value) in kwargs.items()
         )
-        raise Exception(
+        raise ResourceNotFound(
             "No locations found for %s.  Please check your storage service config."
             % kwargs_string
         )
@@ -227,7 +227,7 @@ def location_description_from_slug(aip_location_slug):
        * /api/v2/location/3e796bef-0d56-4471-8700-eeb256859811/
        * /api/v2/location/default/AS/"
 
-    :param string aip_location: storage location URI slug
+    :param string aip_location_slug: storage location URI slug
     :return: storage service location description
     :rtype: dict
     """
@@ -430,7 +430,7 @@ def get_file_info(
     package_type=None,
     status=None,
 ):
-    """ Returns a list of files, optionally filtered by parameters.
+    """Returns a list of files, optionally filtered by parameters.
 
     Queries the storage service and returns a list of files,
     optionally filtered by origin location/path, current location/path, or
@@ -669,7 +669,7 @@ def retrieve_storage_location_description(aip_location_slug, logger=None):
        * /api/v2/location/3e796bef-0d56-4471-8700-eeb256859811/
        * /api/v2/location/default/AS/"
 
-    :param string aip_location: storage location URI slug
+    :param string aip_location_slug: storage location URI slug
     :return: storage service location description or an empty string
     if a description cannot be retrieved.
     :rtype: str
